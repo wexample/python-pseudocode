@@ -1,0 +1,78 @@
+# Migration des prompt responses
+name: prompt_response_migration
+description: Migration des classes de prompt response vers la nouvelle architecture
+version: '1.0'
+
+imports:
+  - patterns.yml  # Patterns réutilisables
+  - validations.yml  # Validations communes
+  - actions.yml  # Actions communes
+
+migrations:
+  tree_prompt_response:
+    description: Migration du TreePromptResponse
+    patterns:
+      source_files:
+        - pattern: "{response_type}_prompt_response.py"
+          vars:
+            response_type: tree
+      test_files:
+        - pattern: "test_{response_type}_prompt_response.py" 
+          vars:
+            response_type: tree
+
+    operations:
+      - name: verify_file_locations
+        type: validation
+        steps:
+          - check_response_file_location:
+              path: wexample_prompt/responses/data/{response_type}_prompt_response.py
+          - check_test_file_location:
+              path: tests/responses/data/test_{response_type}_prompt_response.py
+
+      - name: verify_mixin
+        type: validation
+        steps:
+          - check_mixin_exists:
+              path: wexample_prompt/mixins/response/manager/data/{response_type}_prompt_response_manager_mixin.py
+          - check_mixin_imported:
+              file: wexample_prompt/common/io_manager.py
+              class: IoManager
+              mixin: TreePromptResponseManagerMixin
+
+      - name: verify_response_registration
+        type: validation
+        steps:
+          - check_method_return:
+              file: wexample_prompt/common/io_manager.py
+              method: get_response_types
+              contains: ResponseType.TREE
+
+      - name: verify_example_class
+        type: code_review
+        description: "Vérifier que la classe d'exemple est déclarée dans get_example_class"
+        requirements:
+          - "La méthode get_example_class doit retourner TreeExample"
+          - "La classe TreeExample doit être importée"
+
+      - name: verify_test_inheritance
+        type: code_review
+        description: "Vérifier l'héritage et l'implémentation des méthodes abstraites"
+        requirements:
+          - "La classe de test doit hériter de AbstractPromptResponseTest"
+          - "Toutes les méthodes abstraites doivent être implémentées"
+          - "Les noms de méthodes doivent être génériques (pas de préfixe tree_)"
+
+      - name: run_tests
+        type: command
+        steps:
+          - run:
+              command: .wex/python/venv/bin/pytest -x tests/responses/data/test_{response_type}_prompt_response.py
+              working_dir: /home/weeger/Desktop/WIP/WEB/WEXAMPLE/PIP/pip/prompt
+
+      - name: verify_examples
+        type: command
+        steps:
+          - run:
+              command: .wex/python/venv/bin/python3 examples/all.py
+              working_dir: /home/weeger/Desktop/WIP/WEB/WEXAMPLE/PIP/pip/prompt

@@ -1,0 +1,21 @@
+validations:
+  file_structure:
+    - check_file_exists
+    - check_file_permissions
+    - check_python_syntax
+
+  code_quality:
+    - check_mypy_types
+    - check_pylint_score
+    - check_method_signatures
+
+  test_quality:
+    - check_test_coverage
+    - check_test_assertions
+    - check_test_naming
+
+  common_requirements:
+    abstract_methods:
+      - get_io_method_name
+      - get_expected_lines
+      - get_example_class

@@ -1,0 +1,12 @@
+file_patterns:
+  prompt_response:
+    source: wexample_prompt/responses/{category}/{name}_prompt_response.py
+    test: tests/responses/{category}/test_{name}_prompt_response.py
+    mixin: wexample_prompt/mixins/response/manager/{category}/{name}_prompt_response_manager_mixin.py
+
+class_patterns:
+  prompt_response:
+    response_class: "{Name}PromptResponse"
+    test_class: "Test{Name}PromptResponse"
+    mixin_class: "{Name}PromptResponseManagerMixin"
+    example_class: "{Name}Example"
