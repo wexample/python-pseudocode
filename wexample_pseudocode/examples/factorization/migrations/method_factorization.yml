@@ -1,0 +1,78 @@
+# Migration pour factoriser les méthodes communes
+name: method_factorization
+description: "Analyse et factorise les méthodes similaires dans des classes de base"
+version: '1.0'
+
+imports:
+  - ../patterns.yml
+  - ../validations.yml
+  - ../actions.yml
+
+migrations:
+  example_method_factorization:
+    description: "Factorisation des méthodes example_method"
+    patterns:
+      method_pattern:
+        name: "example_method"
+        variations:
+          - exact: true
+          - prefix: true
+            
+    operations:
+      - name: collect_implementations
+        type: analysis
+        steps:
+          - collect_methods:
+              method_pattern: "{method_pattern}"
+              source_dirs: ["classes"]
+              
+      - name: analyze_methods
+        type: analysis
+        steps:
+          - analyze_similarity:
+              min_similarity: 0.8
+              group_by:
+                - parameter_signature
+                - return_type
+                - core_logic
+                
+      - name: validate_candidates
+        type: validation
+        steps:
+          - for_each_group:
+              run:
+                - check_signature_match
+                - check_behavior_match
+                - check_implementation_match
+                
+      - name: plan_factorization
+        type: analysis
+        steps:
+          - suggest_factorization:
+              existing_bases: ["BaseProcessor", "BaseHandler"]
+              naming_convention: "Base{Purpose}"
+              
+      - name: implement_changes
+        type: implementation
+        requires_review: true
+        steps:
+          - create_base_class:
+              if: "factorization_plan.use_existing_base == false"
+              template: "base_class.py.j2"
+          - move_method_to_base:
+              method: "example_method"
+              target: "{factorization_plan.base_class}"
+          - update_inheritance:
+              classes: "{similar_classes}"
+              base: "{factorization_plan.base_class}"
+              
+      - name: verify_changes
+        type: validation
+        steps:
+          - run_tests:
+              scope: ["modified_files"]
+              coverage: true
+          - verify_inheritance:
+              classes: "{modified_classes}"
+          - check_functionality:
+              methods: ["example_method"]

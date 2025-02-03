@@ -1,0 +1,38 @@
+validations:
+  method_similarity:
+    signature_match:
+      - check_parameter_count
+      - check_parameter_names
+      - check_parameter_types
+      - check_return_type
+      
+    implementation_match:
+      - check_ast_similarity:
+          min_similarity: 0.8
+          ignore_variable_names: true
+      - check_external_dependencies:
+          match_imports: true
+          match_used_classes: true
+      
+    behavior_match:
+      - check_test_cases:
+          min_coverage: 0.9
+          verify_same_results: true
+      - check_side_effects:
+          verify_state_changes: true
+          verify_external_calls: true
+
+  inheritance_compatibility:
+    class_requirements:
+      - check_base_class_compatibility:
+          verify_abstract_methods: true
+          verify_required_attributes: true
+      - check_existing_children:
+          verify_breaking_changes: true
+          
+    method_requirements:
+      - check_method_visibility:
+          allow_reduce_visibility: false
+      - check_method_override:
+          verify_super_calls: true
+          verify_signature_match: true

@@ -1,0 +1,21 @@
+file_patterns:
+  python_classes:
+    source: "{module_path}/**/*.py"
+    parent_class: "base/{category}/{name}.py"
+    
+method_patterns:
+  common_methods:
+    pattern: "{method_name}"
+    variations:
+      - exact_match: true
+        pattern: "def {method_name}(self, *args, **kwargs)"
+      - prefix_match: true
+        pattern: "def {method_name}_{suffix}(self, *args, **kwargs)"
+
+class_patterns:
+  base_classes:
+    pattern: "Base{Category}{Purpose}"
+    examples:
+      - BaseDataProcessor
+      - BaseMessageHandler
+      - BaseResponseFormatter
