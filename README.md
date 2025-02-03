@@ -2,7 +2,7 @@
 
 Code creation and maintenance tools
 
-Version: 0.0.1
+Version: 0.0.4
 
 ## Requirements
 
