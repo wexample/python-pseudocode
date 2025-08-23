@@ -30,6 +30,8 @@ text = "MIT"
 [project.urls]
 homepage = "https://github.com/wexample/python-pseudocode"
 
+[project.optional-dependencies]
+dev = ["pytest"]
 [tool.setuptools]
 packages = [
     "wexample_pseudocode",
