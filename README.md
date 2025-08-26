@@ -1,16 +1,16 @@
-# Pseudocode
+# wexample-pseudocode
 
 Code creation and maintenance tools
 
-Version: 0.0.10
+Version: 0.0.21
 
 ## Requirements
 
-- Python >=3.6
+- Python >=3.10
 
 ## Dependencies
 
-
+- pydantic>=2,<3
 
 ## Installation
 
