@@ -15,7 +15,9 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-dependencies = ["pydantic>=2,<3"]
+dependencies = [
+    "pydantic>=2,<3",
+]
 
 [project.readme]
 file = "README.md"
@@ -28,14 +30,18 @@ text = "MIT"
 homepage = "https://github.com/wexample/python-pseudocode"
 
 [project.optional-dependencies]
-dev = ["pytest"]
+dev = [
+    "pytest",
+]
 [tool.setuptools]
 packages = [
     "wexample_pseudocode",
 ]
 
 [tool.pdm.build]
-includes = ["src/wexample_pseudocode/py.typed"]
+includes = [
+    "src/wexample_pseudocode/py.typed",
+]
 package-dir = "src"
 
 [[tool.pdm.build.packages]]
