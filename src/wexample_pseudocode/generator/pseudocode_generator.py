@@ -6,10 +6,11 @@ from typing import Any, Dict, List
 import yaml
 
 from wexample_pseudocode.parser.module_parser import parse_module_constants
+from wexample_pseudocode.generator.abstract_generator import AbstractGenerator
 
 
 @dataclass
-class PseudocodeGenerator:
+class PseudocodeGenerator(AbstractGenerator):
     """Minimal generator focusing on Python module-level constants -> YAML pseudocode.
 
     Public API kept close to the PHP lib naming:
@@ -31,7 +32,3 @@ class PseudocodeGenerator:
             )
 
         return {"items": items}
-
-    @staticmethod
-    def dump_pseudocode(data: Dict[str, Any]) -> str:
-        return yaml.safe_dump(data, sort_keys=False, allow_unicode=True)
