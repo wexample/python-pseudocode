@@ -4,13 +4,13 @@ items:
     description: "Process an array of data with optional configuration."
     parameters:
       - name: data
-        type: list
+        type: array
       - name: config
-        type: list
+        type: array
         default: []
       - name: callback
-        type: typing.Optional[typing.Callable]
+        type: callable
         optional: true
         default: null
     return:
-      type: list
+      type: array

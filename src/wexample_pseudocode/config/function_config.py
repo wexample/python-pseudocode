@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Optional
 
 from wexample_pseudocode.config.generator_config import GeneratorConfig
 from wexample_pseudocode.config.function_parameter_config import FunctionParameterConfig
+from wexample_pseudocode.common.type_normalizer import to_python_type
 
 
 def _format_value(value: Any) -> str:
@@ -40,7 +41,8 @@ class FunctionConfig:
 
     def to_code(self) -> str:
         params_src = ", ".join(p.to_code() for p in self.parameters)
-        ret = f" -> {self.return_type}" if self.return_type else ""
+        py_ret = to_python_type(self.return_type)
+        ret = f" -> {py_ret}" if py_ret else ""
         header = f"def {self.name}({params_src}){ret}:"
         body_lines: List[str] = []
         if self.description:

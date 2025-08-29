@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Dict, Optional
 
+from wexample_pseudocode.common.type_normalizer import to_python_type
 
 def _format_value(value: Any) -> str:
     if isinstance(value, str):
@@ -30,7 +31,16 @@ class FunctionParameterConfig:
         )
 
     def to_code(self) -> str:
-        left = self.name if self.type is None else f"{self.name}: {self.type}"
+        py_type = to_python_type(self.type)
+        annotated = self.name
+        if py_type is not None:
+            # If default is None (optional), wrap type with typing.Optional[]
+            if self.has_default and self.default is None and not py_type.startswith("typing.Optional["):
+                annotated = f"{self.name}: typing.Optional[{py_type}]"
+            else:
+                annotated = f"{self.name}: {py_type}"
+
+        left = annotated
         if self.has_default:
             if self.default is None:
                 return f"{left} = None"
