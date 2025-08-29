@@ -1,0 +1,73 @@
+from __future__ import annotations
+
+import ast
+from dataclasses import dataclass
+from typing import Iterable, List, Optional
+
+from .class_parser import _annotation_to_str  # reuse helper
+
+
+@dataclass
+class FunctionParameter:
+    name: str
+    type: Optional[str] = None
+    description: Optional[str] = None
+    default: Optional[ast.AST] = None
+    has_default: bool = False
+
+
+@dataclass
+class FunctionItem:
+    name: str
+    description: Optional[str] = None
+    parameters: List[FunctionParameter] = None
+    return_type: Optional[str] = None
+
+
+def parse_module_functions(source_code: str) -> Iterable[FunctionItem]:
+    tree = ast.parse(source_code)
+
+    def _literal(node: Optional[ast.AST]):
+        if node is None:
+            return None
+        try:
+            return ast.literal_eval(node)
+        except Exception:
+            try:
+                return ast.unparse(node)  # type: ignore[attr-defined]
+            except Exception:
+                return None
+
+    for node in tree.body:
+        if isinstance(node, ast.FunctionDef):
+            item = FunctionItem(
+                name=node.name,
+                description=_first_line(ast.get_docstring(node)),
+                parameters=[],
+                return_type=_annotation_to_str(node.returns),
+            )
+            total_args = [a for a in node.args.args]
+            num_defaults = len(node.args.defaults)
+            split_index = len(total_args) - num_defaults
+            for i, arg in enumerate(total_args):
+                if arg.arg == "self":
+                    continue
+                has_default = i >= split_index and num_defaults > 0
+                default = None
+                if has_default:
+                    default = node.args.defaults[i - split_index]
+                item.parameters.append(
+                    FunctionParameter(
+                        name=arg.arg,
+                        type=_annotation_to_str(arg.annotation),
+                        default=default,
+                        has_default=has_default,
+                    )
+                )
+            yield item
+
+
+def _first_line(doc: Optional[str]) -> Optional[str]:
+    if not doc:
+        return None
+    return doc.strip().splitlines()[0].strip()

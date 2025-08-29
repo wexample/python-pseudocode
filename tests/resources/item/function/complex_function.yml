@@ -1,0 +1,15 @@
+items:
+  - type: function
+    name: processData
+    description: "Process an array of data with optional configuration."
+    parameters:
+      - name: data
+        type: list
+      - name: config
+        type: list
+        default: []
+      - name: callback
+        type: typing.Optional[typing.Callable]
+        default: null
+    return:
+      type: list

@@ -8,6 +8,7 @@ import yaml
 from wexample_pseudocode.parser.module_parser import parse_module_constants
 from wexample_pseudocode.generator.abstract_generator import AbstractGenerator
 from wexample_pseudocode.parser.class_parser import parse_module_classes
+from wexample_pseudocode.parser.function_parser import parse_module_functions
 
 
 @dataclass
@@ -81,4 +82,47 @@ class PseudocodeGenerator(AbstractGenerator):
 
             items.append(item)
 
+        for fn in parse_module_functions(source_code):
+            item: Dict[str, Any] = {
+                "type": "function",
+                "name": fn.name,
+            }
+            if fn.description:
+                item["description"] = fn.description
+            if fn.parameters:
+                params: List[Dict[str, Any]] = []
+                for p in fn.parameters:
+                    pd: Dict[str, Any] = {"name": p.name}
+                    if p.type is not None:
+                        pd["type"] = p.type
+                    if getattr(p, "has_default", False):
+                        default_val = _literal_eval_safe(p.default)
+                        # distinguish explicit None default (null) from no default
+                        if p.default is None:
+                            pd["optional"] = True
+                            pd["default"] = None
+                        elif default_val is not None:
+                            pd["default"] = default_val
+                    params.append(pd)
+                item["parameters"] = params
+            if fn.return_type is not None:
+                item["return"] = {"type": fn.return_type}
+            items.append(item)
+
         return {"items": items}
+
+
+def _literal_eval_safe(node):
+    try:
+        import ast as _ast
+
+        if node is None:
+            return None
+        return _ast.literal_eval(node)
+    except Exception:
+        try:
+            import ast as _ast
+
+            return _ast.unparse(node)  # type: ignore[attr-defined]
+        except Exception:
+            return None

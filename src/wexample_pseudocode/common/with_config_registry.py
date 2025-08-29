@@ -16,10 +16,12 @@ class WithConfigRegistry:
         # Register supported item types here
         from wexample_pseudocode.config.constant_config import ConstantConfig  # local import to avoid cycles
         from wexample_pseudocode.config.class_config import ClassConfig
+        from wexample_pseudocode.config.function_config import FunctionConfig
 
         self._registry = {
             "constant": ConstantConfig,
             "class": ClassConfig,
+            "function": FunctionConfig,
         }
 
     def get_config_registry(self) -> "WithConfigRegistry":
