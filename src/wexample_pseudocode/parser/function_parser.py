@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from typing import Iterable, List, Optional
 
 from .class_parser import _annotation_to_str  # reuse helper
+from wexample_pseudocode.common.docstring import parse_docstring
 
 
 @dataclass
@@ -40,9 +41,11 @@ def parse_module_functions(source_code: str) -> Iterable[FunctionItem]:
 
     for node in tree.body:
         if isinstance(node, ast.FunctionDef):
+            raw_doc = ast.get_docstring(node)
+            parsed = parse_docstring(raw_doc)
             item = FunctionItem(
                 name=node.name,
-                description=_first_line(ast.get_docstring(node)),
+                description=_first_line(raw_doc),
                 parameters=[],
                 return_type=_annotation_to_str(node.returns),
             )
@@ -60,6 +63,7 @@ def parse_module_functions(source_code: str) -> Iterable[FunctionItem]:
                     FunctionParameter(
                         name=arg.arg,
                         type=_annotation_to_str(arg.annotation),
+                        description=parsed["params"].get(arg.arg),
                         default=default,
                         has_default=has_default,
                     )

@@ -4,6 +4,7 @@ import ast
 from dataclasses import dataclass, field
 from typing import Any, Dict, Iterable, List, Optional
 
+from wexample_pseudocode.common.docstring import parse_docstring
 
 def _annotation_to_str(ann: Optional[ast.AST]) -> Optional[str]:
     if ann is None:
@@ -92,17 +93,23 @@ def parse_module_classes(source_code: str) -> Iterable[ClassItem]:
                 elif isinstance(stmt, ast.FunctionDef):
                     if stmt.name.startswith("__") and stmt.name.endswith("__"):
                         continue
+                    raw_doc = ast.get_docstring(stmt)
+                    parsed = parse_docstring(raw_doc)
                     m = ClassMethod(
                         name=stmt.name,
-                        description=_first_line(ast.get_docstring(stmt)),
+                        description=_first_line(raw_doc),
                         return_type=_annotation_to_str(stmt.returns),
-                        return_description=None,
+                        return_description=parsed.get("return", {}).get("description"),
                     )
                     for arg in stmt.args.args:
                         if arg.arg == "self":
                             continue
                         m.parameters.append(
-                            MethodParameter(name=arg.arg, type=_annotation_to_str(arg.annotation), description=None)
+                            MethodParameter(
+                                name=arg.arg,
+                                type=_annotation_to_str(arg.annotation),
+                                description=parsed.get("params", {}).get(arg.arg),
+                            )
                         )
                     cls.methods.append(m)
             yield cls
