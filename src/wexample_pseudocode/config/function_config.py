@@ -18,16 +18,16 @@ def _format_value(value: Any) -> str:
 @dataclass
 class FunctionConfig:
     name: str
-    description: Optional[str] = None
-    parameters: List[FunctionParameterConfig] = field(default_factory=list)
-    return_type: Optional[str] = None
-    return_description: Optional[str] = None
+    description: str | None = None
+    parameters: list[FunctionParameterConfig] = field(default_factory=list)
+    return_type: str | None = None
+    return_description: str | None = None
 
     @classmethod
     def from_config(
         cls,
-        data: Dict[str, Any],
-        global_config: Optional[GeneratorConfig] = None,
+        data: dict[str, Any],
+        global_config: GeneratorConfig | None = None,
     ) -> FunctionConfig:
         params = [FunctionParameterConfig.from_config(p) for p in (data.get("parameters") or [])]
         ret_type = None
@@ -49,9 +49,9 @@ class FunctionConfig:
         py_ret = to_python_type(self.return_type)
         ret = f" -> {py_ret}" if py_ret else ""
         header = f"def {self.name}({params_src}){ret}:"
-        body_lines: List[str] = []
+        body_lines: list[str] = []
         # Build docstring including description, parameter descriptions and return description
-        doc_lines: List[str] = []
+        doc_lines: list[str] = []
         if self.description:
             doc_lines.append(self.description)
         # parameters
@@ -68,7 +68,7 @@ class FunctionConfig:
         if doc_lines:
             first = doc_lines[0]
             rest = doc_lines[1:]
-            inner_block: List[str] = [first]
+            inner_block: list[str] = [first]
             if rest:
                 inner_block.append("")
                 inner_block.extend(["    " + line for line in rest])

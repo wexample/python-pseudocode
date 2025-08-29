@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import ast
 from dataclasses import dataclass
-from typing import List, Optional
 from collections.abc import Iterable
 
 from .class_parser import _annotation_to_str  # reuse helper

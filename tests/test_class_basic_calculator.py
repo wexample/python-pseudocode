@@ -7,7 +7,7 @@ import yaml
 from wexample_pseudocode.generator.pseudocode_generator import PseudocodeGenerator
 
 
-def test_class_basic_calculator():
+def test_class_basic_calculator() -> None:
     resources_dir = Path(__file__).parent / "resources" / "item" / "class"
     source_path = resources_dir / "basic_calculator.py"
     expected_yaml_path = resources_dir / "basic_calculator.yml"

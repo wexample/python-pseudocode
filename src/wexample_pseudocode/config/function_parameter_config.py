@@ -15,13 +15,13 @@ def _format_value(value: Any) -> str:
 @dataclass
 class FunctionParameterConfig:
     name: str
-    type: Optional[str] = None
-    description: Optional[str] = None
+    type: str | None = None
+    description: str | None = None
     default: Any = None
     has_default: bool = False
 
     @classmethod
-    def from_config(cls, data: Dict[str, Any]) -> FunctionParameterConfig:
+    def from_config(cls, data: dict[str, Any]) -> FunctionParameterConfig:
         return cls(
             name=data.get("name"),
             type=data.get("type"),

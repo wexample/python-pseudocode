@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from typing import Optional
 
 
 def normalize_type(type_str: str | None) -> str | None:

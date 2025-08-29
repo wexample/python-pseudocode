@@ -10,13 +10,13 @@ from wexample_pseudocode.common.type_normalizer import to_python_type
 @dataclass
 class ClassMethodConfig:
     name: str
-    description: Optional[str] = None
-    parameters: List[MethodParameterConfig] = field(default_factory=list)
-    return_type: Optional[str] = None
-    return_description: Optional[str] = None
+    description: str | None = None
+    parameters: list[MethodParameterConfig] = field(default_factory=list)
+    return_type: str | None = None
+    return_description: str | None = None
 
     @classmethod
-    def from_config(cls, data: Dict[str, Any]) -> ClassMethodConfig:
+    def from_config(cls, data: dict[str, Any]) -> ClassMethodConfig:
         params = []
         for p in (data.get("parameters") or []):
             params.append(
@@ -39,9 +39,9 @@ class ClassMethodConfig:
         py_ret = to_python_type(self.return_type)
         ret = f" -> {py_ret}" if py_ret else ""
         header = f"def {self.name}({params_src}){ret}:"
-        body_lines: List[str] = []
+        body_lines: list[str] = []
         # Build docstring with description, params, return
-        doc_lines: List[str] = []
+        doc_lines: list[str] = []
         if self.description:
             doc_lines.append(self.description)
         # parameter descriptions
@@ -58,7 +58,7 @@ class ClassMethodConfig:
         if doc_lines:
             first = doc_lines[0]
             rest = doc_lines[1:]
-            inner_block: List[str] = []
+            inner_block: list[str] = []
             inner_block.append(first)
             if rest:
                 inner_block.append("")  # blank line before param/return block

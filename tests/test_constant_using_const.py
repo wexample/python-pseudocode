@@ -11,7 +11,7 @@ def load_file(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def test_constant_using_const(resources_dir):
+def test_constant_using_const(resources_dir) -> None:
     source_path = resources_dir / "constant_using_const.py"
     expected_yaml_path = resources_dir / "constant_using_const.yml"
 

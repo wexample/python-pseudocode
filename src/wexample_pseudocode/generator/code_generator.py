@@ -44,7 +44,7 @@ class CodeGenerator(AbstractGenerator, WithConfigRegistry):
             global_generator_config = GeneratorConfig.from_config(data["generator"])  # kept for parity
 
         for item in data.get("items", []) or []:
-            config_cls: Optional[Type] = registry.find_matching_config_loader(item)  # type: ignore[attr-defined]
+            config_cls: type | None = registry.find_matching_config_loader(item)  # type: ignore[attr-defined]
             if config_cls is not None:
                 instances.append(
                     config_cls.from_config(item, global_generator_config)
@@ -52,5 +52,5 @@ class CodeGenerator(AbstractGenerator, WithConfigRegistry):
         return instances
 
     # Implement abstract method (not used directly in CodeGenerator flow)
-    def generate_config_data(self, source_code: str) -> Dict[str, Any]:
+    def generate_config_data(self, source_code: str) -> dict[str, Any]:
         raise NotImplementedError("CodeGenerator does not parse source; it generates code from YAML")

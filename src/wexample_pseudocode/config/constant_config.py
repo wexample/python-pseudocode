@@ -10,10 +10,10 @@ from wexample_pseudocode.config.generator_config import GeneratorConfig
 class ConstantConfig:
     name: str
     value: Any
-    description: Optional[str] = None
+    description: str | None = None
 
     @classmethod
-    def from_config(cls, data: Dict[str, Any], global_config: Optional[GeneratorConfig] = None) -> ConstantConfig:
+    def from_config(cls, data: dict[str, Any], global_config: GeneratorConfig | None = None) -> ConstantConfig:
         return cls(
             name=data.get("name"),
             value=data.get("value"),

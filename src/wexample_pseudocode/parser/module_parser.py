@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import ast
 from dataclasses import dataclass
-from typing import Optional
 from collections.abc import Iterable
 
 

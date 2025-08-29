@@ -14,7 +14,7 @@ PY_RES = Path(
 )
 
 
-def test_php_function_complex_yaml_to_py_matches_python_fixture():
+def test_php_function_complex_yaml_to_py_matches_python_fixture() -> None:
     yml_path = PHP_RES / "function" / "complex_function.yml"
     py_expected = (PY_RES / "function" / "complex_function.py").read_text(encoding="utf-8").strip()
     yml = yml_path.read_text(encoding="utf-8")
@@ -22,7 +22,7 @@ def test_php_function_complex_yaml_to_py_matches_python_fixture():
     assert code == py_expected
 
 
-def test_php_class_basic_yaml_generates_code_contains_class_name():
+def test_php_class_basic_yaml_generates_code_contains_class_name() -> None:
     yml_path = PHP_RES / "class" / "basic_calculator.yml"
     yml = yml_path.read_text(encoding="utf-8")
     code = CodeGenerator().generate(yml)

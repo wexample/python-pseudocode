@@ -20,8 +20,8 @@ class PseudocodeGenerator(AbstractGenerator):
     - dump_pseudocode(data: dict) -> str
     """
 
-    def generate_config_data(self, source_code: str) -> Dict[str, Any]:
-        items: List[Dict[str, Any]] = []
+    def generate_config_data(self, source_code: str) -> dict[str, Any]:
+        items: list[dict[str, Any]] = []
 
         for const in parse_module_constants(source_code):
             items.append(
@@ -34,7 +34,7 @@ class PseudocodeGenerator(AbstractGenerator):
             )
 
         for cls in parse_module_classes(source_code):
-            item: Dict[str, Any] = {
+            item: dict[str, Any] = {
                 "type": "class",
                 "name": cls.name,
             }
@@ -42,9 +42,9 @@ class PseudocodeGenerator(AbstractGenerator):
                 item["description"] = cls.description
 
             if cls.properties:
-                props: List[Dict[str, Any]] = []
+                props: list[dict[str, Any]] = []
                 for p in cls.properties:
-                    pd: Dict[str, Any] = {"name": p.name}
+                    pd: dict[str, Any] = {"name": p.name}
                     if p.type is not None:
                         pd["type"] = normalize_type(p.type)
                     if p.description:
@@ -55,15 +55,15 @@ class PseudocodeGenerator(AbstractGenerator):
                 item["properties"] = props
 
             if cls.methods:
-                methods: List[Dict[str, Any]] = []
+                methods: list[dict[str, Any]] = []
                 for m in cls.methods:
-                    md: Dict[str, Any] = {"type": "method", "name": m.name}
+                    md: dict[str, Any] = {"type": "method", "name": m.name}
                     if m.description:
                         md["description"] = m.description
                     if m.parameters:
-                        params: List[Dict[str, Any]] = []
+                        params: list[dict[str, Any]] = []
                         for a in m.parameters:
-                            ad: Dict[str, Any] = {"name": a.name}
+                            ad: dict[str, Any] = {"name": a.name}
                             if a.type is not None:
                                 ad["type"] = normalize_type(a.type)
                             if a.description:
@@ -71,7 +71,7 @@ class PseudocodeGenerator(AbstractGenerator):
                             params.append(ad)
                         md["parameters"] = params
                     if m.return_type is not None or m.return_description is not None:
-                        rd: Dict[str, Any] = {}
+                        rd: dict[str, Any] = {}
                         if m.return_type is not None:
                             rd["type"] = normalize_type(m.return_type)
                         if m.return_description:
@@ -83,16 +83,16 @@ class PseudocodeGenerator(AbstractGenerator):
             items.append(item)
 
         for fn in parse_module_functions(source_code):
-            item: Dict[str, Any] = {
+            item: dict[str, Any] = {
                 "type": "function",
                 "name": fn.name,
             }
             if fn.description:
                 item["description"] = fn.description
             if fn.parameters:
-                params: List[Dict[str, Any]] = []
+                params: list[dict[str, Any]] = []
                 for p in fn.parameters:
-                    pd: Dict[str, Any] = {"name": p.name}
+                    pd: dict[str, Any] = {"name": p.name}
                     if p.type is not None:
                         pd["type"] = normalize_type(p.type)
                     if getattr(p, "description", None):
@@ -108,7 +108,7 @@ class PseudocodeGenerator(AbstractGenerator):
                     params.append(pd)
                 item["parameters"] = params
             if fn.return_type is not None or getattr(fn, "return_description", None) is not None:
-                rd: Dict[str, Any] = {}
+                rd: dict[str, Any] = {}
                 if fn.return_type is not None:
                     rd["type"] = normalize_type(fn.return_type)
                 if getattr(fn, "return_description", None):

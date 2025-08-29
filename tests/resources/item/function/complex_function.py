@@ -7,4 +7,3 @@ def processData(data: list, config: list = [], callback: typing.Optional[typing.
     :param config: Optional configuration parameters
     :param callback: Optional callback for custom processing
     """
-    pass

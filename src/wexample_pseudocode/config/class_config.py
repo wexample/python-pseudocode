@@ -5,7 +5,6 @@ from typing import Any, Dict, List, Optional
 
 from wexample_pseudocode.config.generator_config import GeneratorConfig
 from wexample_pseudocode.config.class_property_config import ClassPropertyConfig
-from wexample_pseudocode.config.method_parameter_config import MethodParameterConfig
 from wexample_pseudocode.config.class_method_config import ClassMethodConfig
 
 

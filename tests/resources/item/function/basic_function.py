@@ -7,4 +7,3 @@ def add(a: int, b: int) -> int:
     :param b: The second operand.
     :return: The sum of the two numbers.
     """
-    pass

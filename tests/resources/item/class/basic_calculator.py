@@ -12,4 +12,3 @@ class Calculator:
         :param b: The second operand.
         :return: The sum of the two numbers.
         """
-        pass
