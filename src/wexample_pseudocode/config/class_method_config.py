@@ -12,18 +12,25 @@ class ClassMethodConfig:
     description: Optional[str] = None
     parameters: List[MethodParameterConfig] = field(default_factory=list)
     return_type: Optional[str] = None
+    return_description: Optional[str] = None
 
     @classmethod
     def from_config(cls, data: Dict[str, Any]) -> "ClassMethodConfig":
-        params = [
-            MethodParameterConfig(name=p.get("name"), type=p.get("type"))
-            for p in (data.get("parameters") or [])
-        ]
+        params = []
+        for p in (data.get("parameters") or []):
+            params.append(
+                MethodParameterConfig(
+                    name=p.get("name"),
+                    type=p.get("type"),
+                    description=p.get("description"),
+                )
+            )
         return cls(
             name=data.get("name"),
             description=data.get("description"),
             parameters=params,
             return_type=(data.get("return") or {}).get("type"),
+            return_description=(data.get("return") or {}).get("description"),
         )
 
     def to_code(self, indent: str = "    ") -> str:
