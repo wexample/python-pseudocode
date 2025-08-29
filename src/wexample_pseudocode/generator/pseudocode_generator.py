@@ -97,11 +97,11 @@ class PseudocodeGenerator(AbstractGenerator):
                         pd["type"] = p.type
                     if getattr(p, "has_default", False):
                         default_val = _literal_eval_safe(p.default)
-                        # distinguish explicit None default (null) from no default
-                        if p.default is None:
+                        # explicit None default (null)
+                        if isinstance(getattr(p, "default", None), type(None)) or default_val is None:
                             pd["optional"] = True
                             pd["default"] = None
-                        elif default_val is not None:
+                        else:
                             pd["default"] = default_val
                     params.append(pd)
                 item["parameters"] = params

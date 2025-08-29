@@ -10,6 +10,7 @@ items:
         default: []
       - name: callback
         type: typing.Optional[typing.Callable]
+        optional: true
         default: null
     return:
       type: list
