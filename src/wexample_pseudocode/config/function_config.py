@@ -21,6 +21,7 @@ class FunctionConfig:
     description: Optional[str] = None
     parameters: List[FunctionParameterConfig] = field(default_factory=list)
     return_type: Optional[str] = None
+    return_description: Optional[str] = None
 
     @classmethod
     def from_config(
@@ -32,11 +33,15 @@ class FunctionConfig:
         ret_type = None
         if "return" in data:
             ret_type = (data["return"] or {}).get("type") if isinstance(data["return"], dict) else data["return"]
+        ret_desc = None
+        if isinstance(data.get("return"), dict):
+            ret_desc = data["return"].get("description")
         return cls(
             name=data.get("name"),
             description=data.get("description"),
             parameters=params,
             return_type=ret_type,
+            return_description=ret_desc,
         )
 
     def to_code(self) -> str:
@@ -45,8 +50,30 @@ class FunctionConfig:
         ret = f" -> {py_ret}" if py_ret else ""
         header = f"def {self.name}({params_src}){ret}:"
         body_lines: List[str] = []
+        # Build docstring including description, parameter descriptions and return description
+        doc_lines: List[str] = []
         if self.description:
-            body_lines.append('"""' + self.description + '"""')
+            doc_lines.append(self.description)
+        # parameters
+        for p in self.parameters:
+            if p.description:
+                if not doc_lines:
+                    doc_lines.append("")
+                doc_lines.append(f":param {p.name}: {p.description}")
+        # return description
+        if self.return_description:
+            if not doc_lines:
+                doc_lines.append("")
+            doc_lines.append(f":return: {self.return_description}")
+        if doc_lines:
+            first = doc_lines[0]
+            rest = doc_lines[1:]
+            inner_block: List[str] = [first]
+            if rest:
+                inner_block.append("")
+                inner_block.extend(["    " + line for line in rest])
+            doc = '"""' + "\n".join(inner_block) + "\n    " + '"""'
+            body_lines.append(doc)
         body_lines.append("pass")
         body = "\n".join("    " + line for line in body_lines)
         return f"{header}\n{body}"
