@@ -15,8 +15,6 @@ def _format_value(value: Any) -> str:
     return repr(value)
 
 
-
-
 @dataclass
 class ClassConfig:
     name: str
@@ -39,7 +37,9 @@ class ClassConfig:
             )
             for p in (data.get("properties") or [])
         ]
-        methods = [ClassMethodConfig.from_config(m) for m in (data.get("methods") or [])]
+        methods = [
+            ClassMethodConfig.from_config(m) for m in (data.get("methods") or [])
+        ]
         return cls(
             name=data.get("name"),
             description=data.get("description"),
