@@ -36,6 +36,7 @@ dev = [
 [tool.setuptools]
 packages = [
     "pyyaml",
+    "wexample-helpers==0.0.65"
 ]
 
 [tool.pdm]
