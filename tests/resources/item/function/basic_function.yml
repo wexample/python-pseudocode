@@ -5,7 +5,10 @@ items:
     parameters:
       - name: a
         type: int
+        description: "The first operand."
       - name: b
         type: int
+        description: "The second operand."
     return:
       type: int
+      description: "The sum of the two numbers."

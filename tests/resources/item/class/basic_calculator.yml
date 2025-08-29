@@ -14,7 +14,10 @@ items:
         parameters:
           - type: int
             name: a
+            description: 'The first operand.'
           - type: int
             name: b
+            description: "The second operand."
         return:
           type: int
+          description: "The sum of the two numbers."
