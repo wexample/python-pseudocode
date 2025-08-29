@@ -7,6 +7,7 @@ import yaml
 
 from wexample_pseudocode.parser.module_parser import parse_module_constants
 from wexample_pseudocode.generator.abstract_generator import AbstractGenerator
+from wexample_pseudocode.parser.class_parser import parse_module_classes
 
 
 @dataclass
@@ -30,5 +31,54 @@ class PseudocodeGenerator(AbstractGenerator):
                     **({"description": const.description} if const.description else {}),
                 }
             )
+
+        for cls in parse_module_classes(source_code):
+            item: Dict[str, Any] = {
+                "type": "class",
+                "name": cls.name,
+            }
+            if cls.description:
+                item["description"] = cls.description
+
+            if cls.properties:
+                props: List[Dict[str, Any]] = []
+                for p in cls.properties:
+                    pd: Dict[str, Any] = {"name": p.name}
+                    if p.type is not None:
+                        pd["type"] = p.type
+                    if p.description:
+                        pd["description"] = p.description
+                    if p.default is not None:
+                        pd["default"] = p.default
+                    props.append(pd)
+                item["properties"] = props
+
+            if cls.methods:
+                methods: List[Dict[str, Any]] = []
+                for m in cls.methods:
+                    md: Dict[str, Any] = {"type": "method", "name": m.name}
+                    if m.description:
+                        md["description"] = m.description
+                    if m.parameters:
+                        params: List[Dict[str, Any]] = []
+                        for a in m.parameters:
+                            ad: Dict[str, Any] = {"name": a.name}
+                            if a.type is not None:
+                                ad["type"] = a.type
+                            if a.description:
+                                ad["description"] = a.description
+                            params.append(ad)
+                        md["parameters"] = params
+                    if m.return_type is not None or m.return_description is not None:
+                        rd: Dict[str, Any] = {}
+                        if m.return_type is not None:
+                            rd["type"] = m.return_type
+                        if m.return_description:
+                            rd["description"] = m.return_description
+                        md["return"] = rd
+                    methods.append(md)
+                item["methods"] = methods
+
+            items.append(item)
 
         return {"items": items}

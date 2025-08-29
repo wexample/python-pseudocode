@@ -1,0 +1,114 @@
+from __future__ import annotations
+
+import ast
+from dataclasses import dataclass, field
+from typing import Any, Dict, Iterable, List, Optional
+
+
+def _annotation_to_str(ann: Optional[ast.AST]) -> Optional[str]:
+    if ann is None:
+        return None
+    try:
+        return ast.unparse(ann)  # type: ignore[attr-defined]
+    except Exception:
+        if isinstance(ann, ast.Name):
+            return ann.id
+        return None
+
+
+def _literal_eval_safe(node: Optional[ast.AST]):
+    if node is None:
+        return None
+    try:
+        return ast.literal_eval(node)
+    except Exception:
+        try:
+            return ast.unparse(node)  # type: ignore[attr-defined]
+        except Exception:
+            return None
+
+
+@dataclass
+class ClassProperty:
+    name: str
+    type: Optional[str] = None
+    description: Optional[str] = None
+    default: Any = None
+
+
+@dataclass
+class MethodParameter:
+    name: str
+    type: Optional[str] = None
+    description: Optional[str] = None
+
+
+@dataclass
+class ClassMethod:
+    name: str
+    description: Optional[str] = None
+    parameters: List[MethodParameter] = field(default_factory=list)
+    return_type: Optional[str] = None
+    return_description: Optional[str] = None
+
+
+@dataclass
+class ClassItem:
+    name: str
+    description: Optional[str] = None
+    properties: List[ClassProperty] = field(default_factory=list)
+    methods: List[ClassMethod] = field(default_factory=list)
+
+
+def parse_module_classes(source_code: str) -> Iterable[ClassItem]:
+    tree = ast.parse(source_code)
+    # map line -> end-of-line comment
+    line_map: Dict[int, str] = {}
+    for i, line in enumerate(source_code.splitlines(), start=1):
+        if "#" in line:
+            comment = line.split("#", 1)[1].strip()
+            if comment:
+                line_map[i] = comment
+
+    for node in tree.body:
+        if isinstance(node, ast.ClassDef):
+            cls = ClassItem(
+                name=node.name,
+                description=_first_line(ast.get_docstring(node)),
+            )
+            # properties
+            for stmt in node.body:
+                if isinstance(stmt, ast.AnnAssign) and isinstance(stmt.target, ast.Name):
+                    name = stmt.target.id
+                    ann = _annotation_to_str(stmt.annotation)
+                    default = _literal_eval_safe(stmt.value)
+                    desc = line_map.get(stmt.lineno)
+                    cls.properties.append(ClassProperty(name=name, type=ann, description=desc, default=default))
+                elif isinstance(stmt, ast.Assign) and len(stmt.targets) == 1 and isinstance(stmt.targets[0], ast.Name):
+                    name = stmt.targets[0].id
+                    default = _literal_eval_safe(stmt.value)
+                    desc = line_map.get(stmt.lineno)
+                    cls.properties.append(ClassProperty(name=name, type=None, description=desc, default=default))
+                elif isinstance(stmt, ast.FunctionDef):
+                    if stmt.name.startswith("__") and stmt.name.endswith("__"):
+                        continue
+                    m = ClassMethod(
+                        name=stmt.name,
+                        description=_first_line(ast.get_docstring(stmt)),
+                        return_type=_annotation_to_str(stmt.returns),
+                        return_description=None,
+                    )
+                    for arg in stmt.args.args:
+                        if arg.arg == "self":
+                            continue
+                        m.parameters.append(
+                            MethodParameter(name=arg.arg, type=_annotation_to_str(arg.annotation), description=None)
+                        )
+                    cls.methods.append(m)
+            yield cls
+
+
+def _first_line(doc: Optional[str]) -> Optional[str]:
+    if not doc:
+        return None
+    return doc.strip().splitlines()[0].strip()
