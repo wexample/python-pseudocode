@@ -23,6 +23,7 @@ class FunctionItem:
     description: Optional[str] = None
     parameters: List[FunctionParameter] = None
     return_type: Optional[str] = None
+    return_description: Optional[str] = None
 
 
 def parse_module_functions(source_code: str) -> Iterable[FunctionItem]:
@@ -48,6 +49,7 @@ def parse_module_functions(source_code: str) -> Iterable[FunctionItem]:
                 description=_first_line(raw_doc),
                 parameters=[],
                 return_type=_annotation_to_str(node.returns),
+                return_description=parsed.get("return", {}).get("description"),
             )
             total_args = [a for a in node.args.args]
             num_defaults = len(node.args.defaults)

@@ -56,7 +56,16 @@ class ClassMethodConfig:
                 doc_lines.append("")
             doc_lines.append(f":return: {self.return_description}")
         if doc_lines:
-            body_lines.append('"""' + "\n\n".join(doc_lines) + '"""')
+            first = doc_lines[0]
+            rest = doc_lines[1:]
+            inner_block: List[str] = []
+            inner_block.append(first)
+            if rest:
+                inner_block.append("")  # blank line before param/return block
+                # indent param/return lines inside the docstring
+                inner_block.extend(["        " + line for line in rest])
+            doc = '"""' + "\n".join(inner_block) + "\n        " + '"""'
+            body_lines.append(doc)
         body_lines.append("pass")
         inner_indent = indent * 2
         body = "\n".join(inner_indent + line for line in body_lines)
