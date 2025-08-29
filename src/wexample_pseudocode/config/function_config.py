@@ -85,5 +85,12 @@ class FunctionConfig:
         elif self.description:
             body_lines.append('"""' + self.description + '"""')
         body_lines.append("pass")
-        body = "\n".join("    " + line for line in body_lines)
+        # Join preserving truly blank lines (no spaces)
+        out_lines: List[str] = []
+        for line in body_lines:
+            if line == "":
+                out_lines.append("")
+            else:
+                out_lines.append("    " + line)
+        body = "\n".join(out_lines)
         return f"{header}\n{body}"
