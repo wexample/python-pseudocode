@@ -21,7 +21,6 @@ class FunctionConfig:
     description: Optional[str] = None
     parameters: List[FunctionParameterConfig] = field(default_factory=list)
     return_type: Optional[str] = None
-    return_description: Optional[str] = None
 
     @classmethod
     def from_config(
@@ -31,19 +30,13 @@ class FunctionConfig:
     ) -> "FunctionConfig":
         params = [FunctionParameterConfig.from_config(p) for p in (data.get("parameters") or [])]
         ret_type = None
-        ret_desc = None
         if "return" in data:
-            if isinstance(data["return"], dict):
-                ret_type = (data["return"] or {}).get("type")
-                ret_desc = (data["return"] or {}).get("description")
-            else:
-                ret_type = data["return"]
+            ret_type = (data["return"] or {}).get("type") if isinstance(data["return"], dict) else data["return"]
         return cls(
             name=data.get("name"),
             description=data.get("description"),
             parameters=params,
             return_type=ret_type,
-            return_description=ret_desc,
         )
 
     def to_code(self) -> str:
@@ -52,45 +45,8 @@ class FunctionConfig:
         ret = f" -> {py_ret}" if py_ret else ""
         header = f"def {self.name}({params_src}){ret}:"
         body_lines: List[str] = []
-        # Build docstring with description, param and return sections when available
-        doc_lines: List[str] = []
         if self.description:
-            doc_lines.append(self.description)
-        # parameter descriptions
-        for p in self.parameters:
-            if p.description:
-                if not doc_lines:
-                    doc_lines.append("")
-                doc_lines.append("") if len(doc_lines) == 1 else None
-                # ensure a blank line after short description
-                pass
-        # Rebuild properly to avoid tricky state
-        if self.description and any(p.description for p in self.parameters) or (self.return_description):
-            # Start with short desc
-            lines: List[str] = [self.description] if self.description else []
-            if any(p.description for p in self.parameters) or self.return_description:
-                if lines:
-                    lines.append("")
-                for p in self.parameters:
-                    if p.description:
-                        lines.append(f":param {p.name}: {p.description}")
-                if self.return_description:
-                    lines.append(f":return: {self.return_description}")
-            # emit as separate lines to preserve indentation
-            if lines:
-                body_lines.append('"""' + lines[0])
-                for extra in lines[1:]:
-                    body_lines.append(extra)
-                body_lines.append('"""')
-        elif self.description:
             body_lines.append('"""' + self.description + '"""')
         body_lines.append("pass")
-        # Join preserving truly blank lines (no spaces)
-        out_lines: List[str] = []
-        for line in body_lines:
-            if line == "":
-                out_lines.append("")
-            else:
-                out_lines.append("    " + line)
-        body = "\n".join(out_lines)
+        body = "\n".join("    " + line for line in body_lines)
         return f"{header}\n{body}"

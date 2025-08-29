@@ -96,8 +96,6 @@ class PseudocodeGenerator(AbstractGenerator):
                     pd: Dict[str, Any] = {"name": p.name}
                     if p.type is not None:
                         pd["type"] = normalize_type(p.type)
-                    if getattr(p, "description", None):
-                        pd["description"] = p.description
                     if getattr(p, "has_default", False):
                         default_val = _literal_eval_safe(p.default)
                         # explicit None default (null)
@@ -108,13 +106,8 @@ class PseudocodeGenerator(AbstractGenerator):
                             pd["default"] = default_val
                     params.append(pd)
                 item["parameters"] = params
-            if fn.return_type is not None or getattr(fn, "return_description", None) is not None:
-                rd: Dict[str, Any] = {}
-                if fn.return_type is not None:
-                    rd["type"] = normalize_type(fn.return_type)
-                if getattr(fn, "return_description", None):
-                    rd["description"] = fn.return_description
-                item["return"] = rd
+            if fn.return_type is not None:
+                item["return"] = {"type": normalize_type(fn.return_type)}
             items.append(item)
 
         return {"items": items}
