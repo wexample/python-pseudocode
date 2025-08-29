@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from wexample_pseudocode.config.method_parameter_config import MethodParameterConfig
 from wexample_pseudocode.common.type_normalizer import to_python_type

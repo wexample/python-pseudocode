@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import re
 
-
 PARAM_RE = re.compile(r"^\s*:param\s+(?P<name>[A-Za-z_][A-Za-z0-9_]*)\s*:\s*(?P<desc>.+)\s*$")
 RETURN_RE = re.compile(r"^\s*:return[s]?\s*:\s*(?P<desc>.+)\s*$")
 

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 
-
 def normalize_type(type_str: str | None) -> str | None:
     if type_str is None:
         return None

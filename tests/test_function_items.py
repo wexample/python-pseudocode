@@ -3,9 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 
 import yaml
-
-from wexample_pseudocode.generator.pseudocode_generator import PseudocodeGenerator
 from wexample_pseudocode.generator.code_generator import CodeGenerator
+from wexample_pseudocode.generator.pseudocode_generator import PseudocodeGenerator
 
 
 def _res_dir(name: str) -> Path:

@@ -9,7 +9,7 @@ class WithConfigRegistry:
     Mirrors the PHP trait `WithConfigRegistry` for our limited scope (constants only).
     """
 
-    _registry: Dict[str, Type]
+    _registry: dict[str, type]
 
     def __init__(self) -> None:
         # Register supported item types here
@@ -26,7 +26,7 @@ class WithConfigRegistry:
     def get_config_registry(self) -> WithConfigRegistry:
         return self
 
-    def find_matching_config_loader(self, data: dict) -> Optional[Type]:
+    def find_matching_config_loader(self, data: dict) -> type | None:
         item_type = data.get("type")
         if not item_type:
             return None

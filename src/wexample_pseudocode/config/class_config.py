@@ -20,15 +20,15 @@ def _format_value(value: Any) -> str:
 @dataclass
 class ClassConfig:
     name: str
-    description: Optional[str] = None
-    properties: List[ClassPropertyConfig] = field(default_factory=list)
-    methods: List[ClassMethodConfig] = field(default_factory=list)
+    description: str | None = None
+    properties: list[ClassPropertyConfig] = field(default_factory=list)
+    methods: list[ClassMethodConfig] = field(default_factory=list)
 
     @classmethod
     def from_config(
         cls,
-        data: Dict[str, Any],
-        global_config: Optional[GeneratorConfig] = None,
+        data: dict[str, Any],
+        global_config: GeneratorConfig | None = None,
     ) -> ClassConfig:
         props = [
             ClassPropertyConfig(
@@ -48,7 +48,7 @@ class ClassConfig:
         )
 
     def to_code(self) -> str:
-        lines: List[str] = [f"class {self.name}:"]
+        lines: list[str] = [f"class {self.name}:"]
         if self.description:
             lines.append(f'    """{self.description}"""')
             lines.append("")

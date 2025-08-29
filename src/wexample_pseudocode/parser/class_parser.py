@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import ast
+from collections.abc import Iterable
 from dataclasses import dataclass, field
 from typing import Any
-from collections.abc import Iterable
 
 from wexample_pseudocode.common.docstring import parse_docstring
+
 
 def _annotation_to_str(ann: ast.AST | None) -> str | None:
     if ann is None:

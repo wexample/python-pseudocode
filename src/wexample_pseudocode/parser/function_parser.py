@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import ast
-from dataclasses import dataclass
 from collections.abc import Iterable
+from dataclasses import dataclass
+
+from wexample_pseudocode.common.docstring import parse_docstring
 
 from .class_parser import _annotation_to_str  # reuse helper
-from wexample_pseudocode.common.docstring import parse_docstring
 
 
 @dataclass

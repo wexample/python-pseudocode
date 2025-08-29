@@ -2,9 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-
 from wexample_pseudocode.generator.code_generator import CodeGenerator
-
 
 PHP_RES = Path(
     "/home/weeger/Desktop/WIP/WEB/WEXAMPLE/COMPOSER/packages/wexample/php-pseudocode/tests/resources/item"
