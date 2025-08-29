@@ -13,5 +13,5 @@ class GeneratorConfig:
     """
 
     @classmethod
-    def from_config(cls, data: Dict[str, Any]) -> "GeneratorConfig":
+    def from_config(cls, data: Dict[str, Any]) -> GeneratorConfig:
         return cls()

@@ -14,12 +14,12 @@ class AbstractGenerator(ABC):
     """
 
     @abstractmethod
-    def generate_config_data(self, source_code: str) -> Dict[str, Any]:
+    def generate_config_data(self, source_code: str) -> dict[str, Any]:
         """Generate the pseudocode config data from the given source code."""
         raise NotImplementedError
 
     @staticmethod
-    def dump_pseudocode(data: Dict[str, Any]) -> str:
+    def dump_pseudocode(data: dict[str, Any]) -> str:
         """Serialize pseudocode structure to YAML string.
 
         Kept as a static method to mimic the PHP usage ergonomics.

@@ -28,7 +28,7 @@ class FunctionConfig:
         cls,
         data: Dict[str, Any],
         global_config: Optional[GeneratorConfig] = None,
-    ) -> "FunctionConfig":
+    ) -> FunctionConfig:
         params = [FunctionParameterConfig.from_config(p) for p in (data.get("parameters") or [])]
         ret_type = None
         if "return" in data:

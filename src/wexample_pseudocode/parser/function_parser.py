@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import ast
 from dataclasses import dataclass
-from typing import Iterable, List, Optional
+from typing import List, Optional
+from collections.abc import Iterable
 
 from .class_parser import _annotation_to_str  # reuse helper
 from wexample_pseudocode.common.docstring import parse_docstring
@@ -11,25 +12,25 @@ from wexample_pseudocode.common.docstring import parse_docstring
 @dataclass
 class FunctionParameter:
     name: str
-    type: Optional[str] = None
-    description: Optional[str] = None
-    default: Optional[ast.AST] = None
+    type: str | None = None
+    description: str | None = None
+    default: ast.AST | None = None
     has_default: bool = False
 
 
 @dataclass
 class FunctionItem:
     name: str
-    description: Optional[str] = None
-    parameters: List[FunctionParameter] = None
-    return_type: Optional[str] = None
-    return_description: Optional[str] = None
+    description: str | None = None
+    parameters: list[FunctionParameter] = None
+    return_type: str | None = None
+    return_description: str | None = None
 
 
 def parse_module_functions(source_code: str) -> Iterable[FunctionItem]:
     tree = ast.parse(source_code)
 
-    def _literal(node: Optional[ast.AST]):
+    def _literal(node: ast.AST | None):
         if node is None:
             return None
         try:
@@ -73,7 +74,7 @@ def parse_module_functions(source_code: str) -> Iterable[FunctionItem]:
             yield item
 
 
-def _first_line(doc: Optional[str]) -> Optional[str]:
+def _first_line(doc: str | None) -> str | None:
     if not doc:
         return None
     return doc.strip().splitlines()[0].strip()

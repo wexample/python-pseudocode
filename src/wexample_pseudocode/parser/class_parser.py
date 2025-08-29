@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import ast
 from dataclasses import dataclass, field
-from typing import Any, Dict, Iterable, List, Optional
+from typing import Any, Dict, List, Optional
+from collections.abc import Iterable
 
 from wexample_pseudocode.common.docstring import parse_docstring
 
-def _annotation_to_str(ann: Optional[ast.AST]) -> Optional[str]:
+def _annotation_to_str(ann: ast.AST | None) -> str | None:
     if ann is None:
         return None
     try:
@@ -17,7 +18,7 @@ def _annotation_to_str(ann: Optional[ast.AST]) -> Optional[str]:
         return None
 
 
-def _literal_eval_safe(node: Optional[ast.AST]):
+def _literal_eval_safe(node: ast.AST | None):
     if node is None:
         return None
     try:
@@ -32,39 +33,39 @@ def _literal_eval_safe(node: Optional[ast.AST]):
 @dataclass
 class ClassProperty:
     name: str
-    type: Optional[str] = None
-    description: Optional[str] = None
+    type: str | None = None
+    description: str | None = None
     default: Any = None
 
 
 @dataclass
 class MethodParameter:
     name: str
-    type: Optional[str] = None
-    description: Optional[str] = None
+    type: str | None = None
+    description: str | None = None
 
 
 @dataclass
 class ClassMethod:
     name: str
-    description: Optional[str] = None
-    parameters: List[MethodParameter] = field(default_factory=list)
-    return_type: Optional[str] = None
-    return_description: Optional[str] = None
+    description: str | None = None
+    parameters: list[MethodParameter] = field(default_factory=list)
+    return_type: str | None = None
+    return_description: str | None = None
 
 
 @dataclass
 class ClassItem:
     name: str
-    description: Optional[str] = None
-    properties: List[ClassProperty] = field(default_factory=list)
-    methods: List[ClassMethod] = field(default_factory=list)
+    description: str | None = None
+    properties: list[ClassProperty] = field(default_factory=list)
+    methods: list[ClassMethod] = field(default_factory=list)
 
 
 def parse_module_classes(source_code: str) -> Iterable[ClassItem]:
     tree = ast.parse(source_code)
     # map line -> end-of-line comment
-    line_map: Dict[int, str] = {}
+    line_map: dict[int, str] = {}
     for i, line in enumerate(source_code.splitlines(), start=1):
         if "#" in line:
             comment = line.split("#", 1)[1].strip()
@@ -115,7 +116,7 @@ def parse_module_classes(source_code: str) -> Iterable[ClassItem]:
             yield cls
 
 
-def _first_line(doc: Optional[str]) -> Optional[str]:
+def _first_line(doc: str | None) -> str | None:
     if not doc:
         return None
     return doc.strip().splitlines()[0].strip()

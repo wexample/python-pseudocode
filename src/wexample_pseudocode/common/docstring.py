@@ -8,14 +8,14 @@ PARAM_RE = re.compile(r"^\s*:param\s+(?P<name>[A-Za-z_][A-Za-z0-9_]*)\s*:\s*(?P<
 RETURN_RE = re.compile(r"^\s*:return[s]?\s*:\s*(?P<desc>.+)\s*$")
 
 
-def parse_docstring(doc: Optional[str]) -> Dict[str, Dict[str, str]]:
+def parse_docstring(doc: str | None) -> dict[str, dict[str, str]]:
     """Extract simple parameter and return descriptions from a docstring.
 
     Supported styles (single-line only):
     - reST/Sphinx: ":param name: desc" and ":return: desc"
     - Google/NumPy minimal: "Args:"/"Parameters:" block with lines "name: desc"
     """
-    result: Dict[str, Dict[str, str]] = {"params": {}, "return": {}}
+    result: dict[str, dict[str, str]] = {"params": {}, "return": {}}
     if not doc:
         return result
 

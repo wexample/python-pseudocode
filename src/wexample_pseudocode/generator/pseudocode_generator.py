@@ -3,7 +3,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Dict, List
 
-import yaml
 
 from wexample_pseudocode.parser.module_parser import parse_module_constants
 from wexample_pseudocode.generator.abstract_generator import AbstractGenerator

@@ -30,7 +30,7 @@ class ClassConfig:
         cls,
         data: Dict[str, Any],
         global_config: Optional[GeneratorConfig] = None,
-    ) -> "ClassConfig":
+    ) -> ClassConfig:
         props = [
             ClassPropertyConfig(
                 name=p.get("name"),

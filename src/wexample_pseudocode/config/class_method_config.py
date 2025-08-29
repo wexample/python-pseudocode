@@ -16,7 +16,7 @@ class ClassMethodConfig:
     return_description: Optional[str] = None
 
     @classmethod
-    def from_config(cls, data: Dict[str, Any]) -> "ClassMethodConfig":
+    def from_config(cls, data: Dict[str, Any]) -> ClassMethodConfig:
         params = []
         for p in (data.get("parameters") or []):
             params.append(

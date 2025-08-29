@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Optional
 
 
-def normalize_type(type_str: Optional[str]) -> Optional[str]:
+def normalize_type(type_str: str | None) -> str | None:
     if type_str is None:
         return None
     t = type_str.strip()
@@ -32,7 +32,7 @@ def normalize_type(type_str: Optional[str]) -> Optional[str]:
     return t
 
 
-def to_python_type(type_str: Optional[str]) -> Optional[str]:
+def to_python_type(type_str: str | None) -> str | None:
     if type_str is None:
         return None
     t = type_str.strip()

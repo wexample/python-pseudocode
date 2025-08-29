@@ -21,7 +21,7 @@ class FunctionParameterConfig:
     has_default: bool = False
 
     @classmethod
-    def from_config(cls, data: Dict[str, Any]) -> "FunctionParameterConfig":
+    def from_config(cls, data: Dict[str, Any]) -> FunctionParameterConfig:
         return cls(
             name=data.get("name"),
             type=data.get("type"),

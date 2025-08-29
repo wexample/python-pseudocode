@@ -2,14 +2,15 @@ from __future__ import annotations
 
 import ast
 from dataclasses import dataclass
-from typing import Iterable, Optional
+from typing import Optional
+from collections.abc import Iterable
 
 
 @dataclass
 class ConstantItem:
     name: str
     value: object
-    description: Optional[str] = None
+    description: str | None = None
 
 
 def parse_module_constants(source_code: str) -> Iterable[ConstantItem]:

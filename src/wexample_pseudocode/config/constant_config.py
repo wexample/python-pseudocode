@@ -13,7 +13,7 @@ class ConstantConfig:
     description: Optional[str] = None
 
     @classmethod
-    def from_config(cls, data: Dict[str, Any], global_config: Optional[GeneratorConfig] = None) -> "ConstantConfig":
+    def from_config(cls, data: Dict[str, Any], global_config: Optional[GeneratorConfig] = None) -> ConstantConfig:
         return cls(
             name=data.get("name"),
             value=data.get("value"),

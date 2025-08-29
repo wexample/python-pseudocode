@@ -7,5 +7,5 @@ from typing import Optional
 @dataclass
 class DocCommentParameterConfig:
     name: str
-    description: Optional[str] = None
-    type: Optional[str] = None
+    description: str | None = None
+    type: str | None = None

@@ -9,6 +9,6 @@ from wexample_pseudocode.config.doc_comment_return_config import DocCommentRetur
 
 @dataclass
 class DocCommentConfig:
-    description: Optional[str] = None
-    parameters: List[DocCommentParameterConfig] = field(default_factory=list)
-    returns: Optional[DocCommentReturnConfig] = None
+    description: str | None = None
+    parameters: list[DocCommentParameterConfig] = field(default_factory=list)
+    returns: DocCommentReturnConfig | None = None

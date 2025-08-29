@@ -24,7 +24,7 @@ class WithConfigRegistry:
             "function": FunctionConfig,
         }
 
-    def get_config_registry(self) -> "WithConfigRegistry":
+    def get_config_registry(self) -> WithConfigRegistry:
         return self
 
     def find_matching_config_loader(self, data: dict) -> Optional[Type]:
