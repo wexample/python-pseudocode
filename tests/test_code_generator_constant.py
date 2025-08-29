@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-
 from wexample_pseudocode.generator.code_generator import CodeGenerator
 
 

@@ -14,7 +14,11 @@ PY_RES = Path(
 
 def test_php_function_complex_yaml_to_py_matches_python_fixture() -> None:
     yml_path = PHP_RES / "function" / "complex_function.yml"
-    py_expected = (PY_RES / "function" / "complex_function.py").read_text(encoding="utf-8").strip()
+    py_expected = (
+        (PY_RES / "function" / "complex_function.py")
+        .read_text(encoding="utf-8")
+        .strip()
+    )
     yml = yml_path.read_text(encoding="utf-8")
     code = CodeGenerator().generate(yml).strip()
     assert code == py_expected

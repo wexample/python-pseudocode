@@ -8,11 +8,11 @@ def normalize_type(type_str: str | None) -> str | None:
 
     # Strip leading 'typing.' for readability
     if t.startswith("typing."):
-        t = t[len("typing."):]
+        t = t[len("typing.") :]
 
     # Optional[...] -> inner + marker handled by caller
     if t.startswith("Optional[") and t.endswith("]"):
-        inner = t[len("Optional["):-1].strip()
+        inner = t[len("Optional[") : -1].strip()
         return normalize_type(inner)
 
     # Common aliases across languages

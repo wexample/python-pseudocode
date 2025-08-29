@@ -3,12 +3,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-
-from wexample_pseudocode.parser.module_parser import parse_module_constants
+from wexample_pseudocode.common.type_normalizer import normalize_type
 from wexample_pseudocode.generator.abstract_generator import AbstractGenerator
 from wexample_pseudocode.parser.class_parser import parse_module_classes
 from wexample_pseudocode.parser.function_parser import parse_module_functions
-from wexample_pseudocode.common.type_normalizer import normalize_type
+from wexample_pseudocode.parser.module_parser import parse_module_constants
 
 
 @dataclass
@@ -100,14 +99,20 @@ class PseudocodeGenerator(AbstractGenerator):
                     if getattr(p, "has_default", False):
                         default_val = _literal_eval_safe(p.default)
                         # explicit None default (null)
-                        if isinstance(getattr(p, "default", None), type(None)) or default_val is None:
+                        if (
+                            isinstance(getattr(p, "default", None), type(None))
+                            or default_val is None
+                        ):
                             pd["optional"] = True
                             pd["default"] = None
                         else:
                             pd["default"] = default_val
                     params.append(pd)
                 item["parameters"] = params
-            if fn.return_type is not None or getattr(fn, "return_description", None) is not None:
+            if (
+                fn.return_type is not None
+                or getattr(fn, "return_description", None) is not None
+            ):
                 rd: dict[str, Any] = {}
                 if fn.return_type is not None:
                     rd["type"] = normalize_type(fn.return_type)

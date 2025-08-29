@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import re
 
-PARAM_RE = re.compile(r"^\s*:param\s+(?P<name>[A-Za-z_][A-Za-z0-9_]*)\s*:\s*(?P<desc>.+)\s*$")
+PARAM_RE = re.compile(
+    r"^\s*:param\s+(?P<name>[A-Za-z_][A-Za-z0-9_]*)\s*:\s*(?P<desc>.+)\s*$"
+)
 RETURN_RE = re.compile(r"^\s*:return[s]?\s*:\s*(?P<desc>.+)\s*$")
 
 
@@ -32,7 +34,9 @@ def parse_docstring(doc: str | None) -> dict[str, dict[str, str]]:
     # Pass 2: Google/NumPy minimal blocks
     def parse_block(header: str) -> None:
         try:
-            idx = next(i for i, l in enumerate(lines) if l.strip().lower().startswith(header))
+            idx = next(
+                i for i, l in enumerate(lines) if l.strip().lower().startswith(header)
+            )
         except StopIteration:
             return
         i = idx + 1
@@ -53,7 +57,9 @@ def parse_docstring(doc: str | None) -> dict[str, dict[str, str]]:
                         result["params"][name] = desc
                 elif header.startswith("returns"):
                     if desc and "description" not in result["return"]:
-                        result["return"]["description"] = f"{name}: {desc}" if name else desc
+                        result["return"]["description"] = (
+                            f"{name}: {desc}" if name else desc
+                        )
             i += 1
 
     parse_block("args:")

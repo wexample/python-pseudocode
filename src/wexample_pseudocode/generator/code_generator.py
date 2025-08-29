@@ -4,7 +4,6 @@ from dataclasses import dataclass
 from typing import Any
 
 import yaml
-
 from wexample_pseudocode.common.with_config_registry import WithConfigRegistry
 from wexample_pseudocode.config.generator_config import GeneratorConfig
 from wexample_pseudocode.generator.abstract_generator import AbstractGenerator
@@ -41,16 +40,18 @@ class CodeGenerator(AbstractGenerator, WithConfigRegistry):
 
         global_generator_config = None
         if "generator" in data:
-            global_generator_config = GeneratorConfig.from_config(data["generator"])  # kept for parity
+            global_generator_config = GeneratorConfig.from_config(
+                data["generator"]
+            )  # kept for parity
 
         for item in data.get("items", []) or []:
             config_cls: type | None = registry.find_matching_config_loader(item)  # type: ignore[attr-defined]
             if config_cls is not None:
-                instances.append(
-                    config_cls.from_config(item, global_generator_config)
-                )
+                instances.append(config_cls.from_config(item, global_generator_config))
         return instances
 
     # Implement abstract method (not used directly in CodeGenerator flow)
     def generate_config_data(self, source_code: str) -> dict[str, Any]:
-        raise NotImplementedError("CodeGenerator does not parse source; it generates code from YAML")
+        raise NotImplementedError(
+            "CodeGenerator does not parse source; it generates code from YAML"
+        )

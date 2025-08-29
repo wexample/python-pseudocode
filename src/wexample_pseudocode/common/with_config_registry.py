@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Dict, Optional, Type
-
 
 class WithConfigRegistry:
     """Minimal registry to map pseudocode items to config loader classes.
@@ -13,8 +11,10 @@ class WithConfigRegistry:
 
     def __init__(self) -> None:
         # Register supported item types here
-        from wexample_pseudocode.config.constant_config import ConstantConfig  # local import to avoid cycles
         from wexample_pseudocode.config.class_config import ClassConfig
+        from wexample_pseudocode.config.constant_config import (
+            ConstantConfig,  # local import to avoid cycles
+        )
         from wexample_pseudocode.config.function_config import FunctionConfig
 
         self._registry = {

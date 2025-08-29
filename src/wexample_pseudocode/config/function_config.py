@@ -3,9 +3,9 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from wexample_pseudocode.config.generator_config import GeneratorConfig
-from wexample_pseudocode.config.function_parameter_config import FunctionParameterConfig
 from wexample_pseudocode.common.type_normalizer import to_python_type
+from wexample_pseudocode.config.function_parameter_config import FunctionParameterConfig
+from wexample_pseudocode.config.generator_config import GeneratorConfig
 
 
 def _format_value(value: Any) -> str:
@@ -29,10 +29,17 @@ class FunctionConfig:
         data: dict[str, Any],
         global_config: GeneratorConfig | None = None,
     ) -> FunctionConfig:
-        params = [FunctionParameterConfig.from_config(p) for p in (data.get("parameters") or [])]
+        params = [
+            FunctionParameterConfig.from_config(p)
+            for p in (data.get("parameters") or [])
+        ]
         ret_type = None
         if "return" in data:
-            ret_type = (data["return"] or {}).get("type") if isinstance(data["return"], dict) else data["return"]
+            ret_type = (
+                (data["return"] or {}).get("type")
+                if isinstance(data["return"], dict)
+                else data["return"]
+            )
         ret_desc = None
         if isinstance(data.get("return"), dict):
             ret_desc = data["return"].get("description")

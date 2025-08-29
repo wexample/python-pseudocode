@@ -13,7 +13,9 @@ class ConstantConfig:
     description: str | None = None
 
     @classmethod
-    def from_config(cls, data: dict[str, Any], global_config: GeneratorConfig | None = None) -> ConstantConfig:
+    def from_config(
+        cls, data: dict[str, Any], global_config: GeneratorConfig | None = None
+    ) -> ConstantConfig:
         return cls(
             name=data.get("name"),
             value=data.get("value"),

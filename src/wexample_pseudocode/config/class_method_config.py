@@ -3,8 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from wexample_pseudocode.config.method_parameter_config import MethodParameterConfig
 from wexample_pseudocode.common.type_normalizer import to_python_type
+from wexample_pseudocode.config.method_parameter_config import MethodParameterConfig
 
 
 @dataclass
@@ -18,7 +18,7 @@ class ClassMethodConfig:
     @classmethod
     def from_config(cls, data: dict[str, Any]) -> ClassMethodConfig:
         params = []
-        for p in (data.get("parameters") or []):
+        for p in data.get("parameters") or []:
             params.append(
                 MethodParameterConfig(
                     name=p.get("name"),
@@ -48,7 +48,9 @@ class ClassMethodConfig:
         for p in self.parameters:
             if p.description:
                 if not doc_lines:
-                    doc_lines.append("")  # ensure doc starts before params if no summary
+                    doc_lines.append(
+                        ""
+                    )  # ensure doc starts before params if no summary
                 doc_lines.append(f":param {p.name}: {p.description}")
         # return description
         if self.return_description:

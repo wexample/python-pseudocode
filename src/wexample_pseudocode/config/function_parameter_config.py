@@ -5,6 +5,7 @@ from typing import Any
 
 from wexample_pseudocode.common.type_normalizer import to_python_type
 
+
 def _format_value(value: Any) -> str:
     if isinstance(value, str):
         escaped = value.replace('"', '\\"')
@@ -35,7 +36,11 @@ class FunctionParameterConfig:
         annotated = self.name
         if py_type is not None:
             # If default is None (optional), wrap type with typing.Optional[]
-            if self.has_default and self.default is None and not py_type.startswith("typing.Optional["):
+            if (
+                self.has_default
+                and self.default is None
+                and not py_type.startswith("typing.Optional[")
+            ):
                 annotated = f"{self.name}: typing.Optional[{py_type}]"
             else:
                 annotated = f"{self.name}: {py_type}"

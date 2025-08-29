@@ -81,17 +81,31 @@ def parse_module_classes(source_code: str) -> Iterable[ClassItem]:
             )
             # properties
             for stmt in node.body:
-                if isinstance(stmt, ast.AnnAssign) and isinstance(stmt.target, ast.Name):
+                if isinstance(stmt, ast.AnnAssign) and isinstance(
+                    stmt.target, ast.Name
+                ):
                     name = stmt.target.id
                     ann = _annotation_to_str(stmt.annotation)
                     default = _literal_eval_safe(stmt.value)
                     desc = line_map.get(stmt.lineno)
-                    cls.properties.append(ClassProperty(name=name, type=ann, description=desc, default=default))
-                elif isinstance(stmt, ast.Assign) and len(stmt.targets) == 1 and isinstance(stmt.targets[0], ast.Name):
+                    cls.properties.append(
+                        ClassProperty(
+                            name=name, type=ann, description=desc, default=default
+                        )
+                    )
+                elif (
+                    isinstance(stmt, ast.Assign)
+                    and len(stmt.targets) == 1
+                    and isinstance(stmt.targets[0], ast.Name)
+                ):
                     name = stmt.targets[0].id
                     default = _literal_eval_safe(stmt.value)
                     desc = line_map.get(stmt.lineno)
-                    cls.properties.append(ClassProperty(name=name, type=None, description=desc, default=default))
+                    cls.properties.append(
+                        ClassProperty(
+                            name=name, type=None, description=desc, default=default
+                        )
+                    )
                 elif isinstance(stmt, ast.FunctionDef):
                     if stmt.name.startswith("__") and stmt.name.endswith("__"):
                         continue
