@@ -1,2 +1,3 @@
-name: pseudocode
-version: 0.0.23
+general:
+  name: pseudocode
+  version: 0.0.23
