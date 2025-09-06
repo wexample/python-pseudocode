@@ -1,7 +1,9 @@
 from __future__ import annotations
 
-import yaml
 from typing import TYPE_CHECKING
+
+import yaml
+
 if TYPE_CHECKING:
     from pathlib import Path
 

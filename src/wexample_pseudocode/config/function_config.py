@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Any
+
 from wexample_pseudocode.config.function_parameter_config import FunctionParameterConfig
 from wexample_pseudocode.config.generator_config import GeneratorConfig
 
@@ -51,6 +52,7 @@ class FunctionConfig:
 
     def to_code(self) -> str:
         from wexample_pseudocode.common.type_normalizer import to_python_type
+
         params_src = ", ".join(p.to_code() for p in self.parameters)
         py_ret = to_python_type(self.return_type)
         ret = f" -> {py_ret}" if py_ret else ""

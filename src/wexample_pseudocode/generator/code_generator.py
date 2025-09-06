@@ -34,6 +34,7 @@ class CodeGenerator(AbstractGenerator, WithConfigRegistry):
 
     def _generate_config(self, input_text: str):
         from wexample_pseudocode.config.generator_config import GeneratorConfig
+
         data = yaml.safe_load(input_text) or {}
         registry = self.get_config_registry()
         instances = []

@@ -31,6 +31,7 @@ class FunctionParameterConfig:
 
     def to_code(self) -> str:
         from wexample_pseudocode.common.type_normalizer import to_python_type
+
         py_type = to_python_type(self.type)
         annotated = self.name
         if py_type is not None:

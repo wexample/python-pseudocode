@@ -3,6 +3,7 @@ from __future__ import annotations
 import ast
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from collections.abc import Iterable
 
@@ -28,6 +29,7 @@ class FunctionItem:
 def parse_module_functions(source_code: str) -> Iterable[FunctionItem]:
     from class_parser import _annotation_to_str
     from wexample_pseudocode.common.docstring import parse_docstring
+
     tree = ast.parse(source_code)
 
     def _literal(node: ast.AST | None):
