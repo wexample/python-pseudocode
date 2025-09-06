@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from pathlib import Path
-
 import yaml
-from wexample_pseudocode.generator.pseudocode_generator import PseudocodeGenerator
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 def load_file(path: Path) -> str:
@@ -11,6 +11,8 @@ def load_file(path: Path) -> str:
 
 
 def test_constant_using_const(resources_dir) -> None:
+    from pathlib import Path
+    from wexample_pseudocode.generator.pseudocode_generator import PseudocodeGenerator
     source_path = resources_dir / "constant_using_const.py"
     expected_yaml_path = resources_dir / "constant_using_const.yml"
 

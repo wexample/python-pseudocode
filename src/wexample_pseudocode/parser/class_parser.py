@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import ast
-from collections.abc import Iterable
 from dataclasses import dataclass, field
 from typing import Any
-
-from wexample_pseudocode.common.docstring import parse_docstring
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 
 def _annotation_to_str(ann: ast.AST | None) -> str | None:
@@ -64,6 +64,7 @@ class ClassItem:
 
 
 def parse_module_classes(source_code: str) -> Iterable[ClassItem]:
+    from wexample_pseudocode.common.docstring import parse_docstring
     tree = ast.parse(source_code)
     # map line -> end-of-line comment
     line_map: dict[int, str] = {}

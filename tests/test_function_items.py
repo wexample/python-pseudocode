@@ -1,17 +1,18 @@
 from __future__ import annotations
 
-from pathlib import Path
-
 import yaml
-from wexample_pseudocode.generator.code_generator import CodeGenerator
-from wexample_pseudocode.generator.pseudocode_generator import PseudocodeGenerator
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 def _res_dir(name: str) -> Path:
+    from pathlib import Path
     return Path(__file__).parent / "resources" / "item" / "function"
 
 
 def test_function_basic_py_to_yaml() -> None:
+    from wexample_pseudocode.generator.pseudocode_generator import PseudocodeGenerator
     d = _res_dir("function")
     py = (d / "basic_function.py").read_text(encoding="utf-8")
     expected = yaml.safe_load((d / "basic_function.yml").read_text(encoding="utf-8"))
@@ -21,6 +22,7 @@ def test_function_basic_py_to_yaml() -> None:
 
 
 def test_function_basic_yaml_to_py() -> None:
+    from wexample_pseudocode.generator.code_generator import CodeGenerator
     d = _res_dir("function")
     yml = (d / "basic_function.yml").read_text(encoding="utf-8")
     expected_code = (d / "basic_function.py").read_text(encoding="utf-8").strip()
@@ -30,6 +32,7 @@ def test_function_basic_yaml_to_py() -> None:
 
 
 def test_function_complex_py_to_yaml() -> None:
+    from wexample_pseudocode.generator.pseudocode_generator import PseudocodeGenerator
     d = _res_dir("function")
     py = (d / "complex_function.py").read_text(encoding="utf-8")
     expected = yaml.safe_load((d / "complex_function.yml").read_text(encoding="utf-8"))
@@ -39,6 +42,7 @@ def test_function_complex_py_to_yaml() -> None:
 
 
 def test_function_complex_yaml_to_py() -> None:
+    from wexample_pseudocode.generator.code_generator import CodeGenerator
     d = _res_dir("function")
     yml = (d / "complex_function.yml").read_text(encoding="utf-8")
     expected_code = (d / "complex_function.py").read_text(encoding="utf-8").strip()

@@ -5,7 +5,6 @@ from typing import Any
 
 import yaml
 from wexample_pseudocode.common.with_config_registry import WithConfigRegistry
-from wexample_pseudocode.config.generator_config import GeneratorConfig
 from wexample_pseudocode.generator.abstract_generator import AbstractGenerator
 
 
@@ -34,6 +33,7 @@ class CodeGenerator(AbstractGenerator, WithConfigRegistry):
         return output
 
     def _generate_config(self, input_text: str):
+        from wexample_pseudocode.config.generator_config import GeneratorConfig
         data = yaml.safe_load(input_text) or {}
         registry = self.get_config_registry()
         instances = []
