@@ -17,10 +17,10 @@ def _format_value(value: Any) -> str:
 
 @dataclass
 class ClassConfig:
-    name: str
     description: str | None = None
-    properties: list[ClassPropertyConfig] = field(default_factory=list)
     methods: list[ClassMethodConfig] = field(default_factory=list)
+    name: str
+    properties: list[ClassPropertyConfig] = field(default_factory=list)
 
     @classmethod
     def from_config(

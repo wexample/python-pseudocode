@@ -13,11 +13,11 @@ def _format_value(value: Any) -> str:
 
 @dataclass
 class FunctionParameterConfig:
+    default: Any = None
+    description: str | None = None
+    has_default: bool = False
     name: str
     type: str | None = None
-    description: str | None = None
-    default: Any = None
-    has_default: bool = False
 
     @classmethod
     def from_config(cls, data: dict[str, Any]) -> FunctionParameterConfig:

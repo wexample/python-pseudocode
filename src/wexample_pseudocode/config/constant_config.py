@@ -8,9 +8,9 @@ from wexample_pseudocode.config.generator_config import GeneratorConfig
 
 @dataclass
 class ConstantConfig:
+    description: str | None = None
     name: str
     value: Any
-    description: str | None = None
 
     @classmethod
     def from_config(

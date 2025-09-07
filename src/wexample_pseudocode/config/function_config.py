@@ -16,11 +16,11 @@ def _format_value(value: Any) -> str:
 
 @dataclass
 class FunctionConfig:
-    name: str
     description: str | None = None
+    name: str
     parameters: list[FunctionParameterConfig] = field(default_factory=list)
-    return_type: str | None = None
     return_description: str | None = None
+    return_type: str | None = None
 
     @classmethod
     def from_config(

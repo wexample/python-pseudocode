@@ -13,10 +13,10 @@ def _format_value(value: Any) -> str:
 
 @dataclass
 class ClassPropertyConfig:
+    default: Any = None
+    description: str | None = None
     name: str
     type: str | None = None
-    description: str | None = None
-    default: Any = None
 
     def to_code(self) -> str:
         left = f"{self.name}: {self.type}" if self.type is not None else self.name

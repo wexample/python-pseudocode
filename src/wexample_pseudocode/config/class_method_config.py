@@ -8,11 +8,11 @@ from wexample_pseudocode.config.method_parameter_config import MethodParameterCo
 
 @dataclass
 class ClassMethodConfig:
-    name: str
     description: str | None = None
+    name: str
     parameters: list[MethodParameterConfig] = field(default_factory=list)
-    return_type: str | None = None
     return_description: str | None = None
+    return_type: str | None = None
 
     @classmethod
     def from_config(cls, data: dict[str, Any]) -> ClassMethodConfig:

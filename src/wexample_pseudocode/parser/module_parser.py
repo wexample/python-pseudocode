@@ -58,6 +58,6 @@ def _literal_eval_safe(node: ast.AST):
 
 @dataclass
 class ConstantItem:
+    description: str | None = None
     name: str
     value: object
-    description: str | None = None
