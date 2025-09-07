@@ -16,6 +16,7 @@ def test_constant_using_const(resources_dir) -> None:
     from pathlib import Path
 
     from wexample_pseudocode.generator.pseudocode_generator import PseudocodeGenerator
+
     source_path = resources_dir / "constant_using_const.py"
     expected_yaml_path = resources_dir / "constant_using_const.yml"
 

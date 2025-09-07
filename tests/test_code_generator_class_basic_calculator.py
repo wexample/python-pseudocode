@@ -5,6 +5,7 @@ def test_code_generator_class_basic_calculator() -> None:
     from pathlib import Path
 
     from wexample_pseudocode.generator.code_generator import CodeGenerator
+
     resources_dir = Path(__file__).parent / "resources" / "item" / "class"
     yml_path = resources_dir / "basic_calculator.yml"
     expected_code_path = resources_dir / "basic_calculator.py"
