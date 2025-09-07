@@ -45,9 +45,6 @@ packages = [
 distribution = true
 
 [tool.pdm.build]
-includes = [
-    'src/wexample_pseudocode/*',
-]
 package-dir = "src"
 
 [[tool.pdm.build.packages]]
