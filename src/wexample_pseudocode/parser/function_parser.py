@@ -8,24 +8,6 @@ if TYPE_CHECKING:
     from collections.abc import Iterable
 
 
-@dataclass
-class FunctionParameter:
-    name: str
-    type: str | None = None
-    description: str | None = None
-    default: ast.AST | None = None
-    has_default: bool = False
-
-
-@dataclass
-class FunctionItem:
-    name: str
-    description: str | None = None
-    parameters: list[FunctionParameter] = None
-    return_type: str | None = None
-    return_description: str | None = None
-
-
 def parse_module_functions(source_code: str) -> Iterable[FunctionItem]:
     from class_parser import _annotation_to_str
     from wexample_pseudocode.common.docstring import parse_docstring
@@ -80,3 +62,21 @@ def _first_line(doc: str | None) -> str | None:
     if not doc:
         return None
     return doc.strip().splitlines()[0].strip()
+
+
+@dataclass
+class FunctionParameter:
+    name: str
+    type: str | None = None
+    description: str | None = None
+    default: ast.AST | None = None
+    has_default: bool = False
+
+
+@dataclass
+class FunctionItem:
+    name: str
+    description: str | None = None
+    parameters: list[FunctionParameter] = None
+    return_type: str | None = None
+    return_description: str | None = None

@@ -8,12 +8,6 @@ if TYPE_CHECKING:
     from pathlib import Path
 
 
-def _res_dir(name: str) -> Path:
-    from pathlib import Path
-
-    return Path(__file__).parent / "resources" / "item" / "function"
-
-
 def test_function_basic_py_to_yaml() -> None:
     from wexample_pseudocode.generator.pseudocode_generator import PseudocodeGenerator
 
@@ -56,3 +50,9 @@ def test_function_complex_yaml_to_py() -> None:
 
     code = CodeGenerator().generate(yml)
     assert code.strip() == expected_code
+
+
+def _res_dir(name: str) -> Path:
+    from pathlib import Path
+
+    return Path(__file__).parent / "resources" / "item" / "function"

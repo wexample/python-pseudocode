@@ -6,6 +6,22 @@ from typing import Any
 from wexample_pseudocode.generator.abstract_generator import AbstractGenerator
 
 
+def _literal_eval_safe(node):
+    try:
+        import ast as _ast
+
+        if node is None:
+            return None
+        return _ast.literal_eval(node)
+    except Exception:
+        try:
+            import ast as _ast
+
+            return _ast.unparse(node)  # type: ignore[attr-defined]
+        except Exception:
+            return None
+
+
 @dataclass
 class PseudocodeGenerator(AbstractGenerator):
     """Minimal generator focusing on Python module-level constants -> YAML pseudocode.
@@ -123,19 +139,3 @@ class PseudocodeGenerator(AbstractGenerator):
             items.append(item)
 
         return {"items": items}
-
-
-def _literal_eval_safe(node):
-    try:
-        import ast as _ast
-
-        if node is None:
-            return None
-        return _ast.literal_eval(node)
-    except Exception:
-        try:
-            import ast as _ast
-
-            return _ast.unparse(node)  # type: ignore[attr-defined]
-        except Exception:
-            return None

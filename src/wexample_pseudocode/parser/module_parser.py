@@ -8,13 +8,6 @@ if TYPE_CHECKING:
     from collections.abc import Iterable
 
 
-@dataclass
-class ConstantItem:
-    name: str
-    value: object
-    description: str | None = None
-
-
 def parse_module_constants(source_code: str) -> Iterable[ConstantItem]:
     """Extract top-level assignments with ALL_CAPS names as constants.
 
@@ -61,3 +54,10 @@ def _literal_eval_safe(node: ast.AST):
             return ast.unparse(node)  # type: ignore[attr-defined]
         except Exception:
             return None
+
+
+@dataclass
+class ConstantItem:
+    name: str
+    value: object
+    description: str | None = None
