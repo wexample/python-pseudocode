@@ -6,7 +6,6 @@ class WithConfigRegistry:
 
     Mirrors the PHP trait `WithConfigRegistry` for our limited scope (constants only).
     """
-
     _registry: dict[str, type]
 
     def __init__(self) -> None:
