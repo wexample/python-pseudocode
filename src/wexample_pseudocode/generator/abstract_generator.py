@@ -12,7 +12,6 @@ class AbstractGenerator(ABC):
     Provides a common YAML dump helper and enforces the public API
     expected from concrete generators.
     """
-
     @staticmethod
     def dump_pseudocode(data: dict[str, Any]) -> str:
         """Serialize pseudocode structure to YAML string.

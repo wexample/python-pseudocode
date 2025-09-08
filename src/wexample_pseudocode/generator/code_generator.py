@@ -15,7 +15,6 @@ class CodeGenerator(AbstractGenerator, WithConfigRegistry):
     Mirrors the PHP CodeGenerator class but targets Python as the output language.
     Minimal scope: only constant items.
     """
-
     def __post_init__(self) -> None:  # dataclass hook; ensure registry init
         WithConfigRegistry.__init__(self)
 
