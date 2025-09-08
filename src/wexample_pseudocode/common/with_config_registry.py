@@ -20,11 +20,11 @@ class WithConfigRegistry:
             "function": FunctionConfig,
         }
 
-    def get_config_registry(self) -> WithConfigRegistry:
-        return self
-
     def find_matching_config_loader(self, data: dict) -> type | None:
         item_type = data.get("type")
         if not item_type:
             return None
         return self._registry.get(item_type)
+
+    def get_config_registry(self) -> WithConfigRegistry:
+        return self
