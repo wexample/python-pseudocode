@@ -30,6 +30,7 @@ class PseudocodeGenerator(AbstractGenerator):
     - generate_config_data(source_code: str) -> dict
     - dump_pseudocode(data: dict) -> str
     """
+
     def generate_config_data(self, source_code: str) -> dict[str, Any]:
         from wexample_pseudocode.common.type_normalizer import normalize_type
         from wexample_pseudocode.parser.class_parser import parse_module_classes

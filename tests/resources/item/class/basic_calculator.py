@@ -3,6 +3,7 @@ from __future__ import annotations
 
 class Calculator:
     """A class that performs basic arithmetic operations."""
+
     lastResult: int = 0  # Stores the result of the last operation performed.
 
     def add(self, a: int, b: int) -> int:
