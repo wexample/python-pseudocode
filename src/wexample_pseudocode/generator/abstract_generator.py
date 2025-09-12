@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
 from typing import Any
 
 import yaml
 
+from wexample_helpers.classes.abstract_method import abstract_method
 
-class AbstractGenerator(ABC):
+
+class AbstractGenerator:
     """Base class mirroring the PHP AbstractGenerator responsibilities.
 
     Provides a common YAML dump helper and enforces the public API
@@ -21,7 +22,7 @@ class AbstractGenerator(ABC):
         """
         return yaml.safe_dump(data, sort_keys=False, allow_unicode=True)
 
-    @abstractmethod
+    @abstract_method
     def generate_config_data(self, source_code: str) -> dict[str, Any]:
         """Generate the pseudocode config data from the given source code."""
         raise NotImplementedError
