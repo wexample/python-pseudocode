@@ -2,8 +2,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Any
-
-from wexample_pseudocode.config.method_parameter_config import MethodParameterConfig
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from wexample_pseudocode.config.method_parameter_config import MethodParameterConfig
 
 
 @dataclass
@@ -16,6 +17,7 @@ class ClassMethodConfig:
 
     @classmethod
     def from_config(cls, data: dict[str, Any]) -> ClassMethodConfig:
+        from wexample_pseudocode.config.method_parameter_config import MethodParameterConfig
         params = []
         for p in data.get("parameters") or []:
             params.append(

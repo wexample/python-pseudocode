@@ -5,8 +5,8 @@ from dataclasses import dataclass
 
 @dataclass
 class MethodParameterConfig:
-    description: str | None = None
     name: str
+    description: str | None = None
     type: str | None = None
 
     def to_code(self) -> str:

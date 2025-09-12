@@ -13,10 +13,10 @@ def _format_value(value: Any) -> str:
 
 @dataclass
 class FunctionParameterConfig:
+    name: str
     default: Any = None
     description: str | None = None
     has_default: bool = False
-    name: str
     type: str | None = None
 
     @classmethod

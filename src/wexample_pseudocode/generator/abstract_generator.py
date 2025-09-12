@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import Any
 
 import yaml
-
 from wexample_helpers.classes.abstract_method import abstract_method
 
 

@@ -5,6 +5,6 @@ from dataclasses import dataclass
 
 @dataclass
 class DocCommentParameterConfig:
-    description: str | None = None
     name: str
+    description: str | None = None
     type: str | None = None

@@ -2,9 +2,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Any
-
-from wexample_pseudocode.config.function_parameter_config import FunctionParameterConfig
 from wexample_pseudocode.config.generator_config import GeneratorConfig
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from wexample_pseudocode.config.function_parameter_config import FunctionParameterConfig
+    from wexample_pseudocode.config.generator_config import GeneratorConfig
 
 
 def _format_value(value: Any) -> str:
@@ -28,6 +30,7 @@ class FunctionConfig:
         data: dict[str, Any],
         global_config: GeneratorConfig | None = None,
     ) -> FunctionConfig:
+        from wexample_pseudocode.config.function_parameter_config import FunctionParameterConfig
         params = [
             FunctionParameterConfig.from_config(p)
             for p in (data.get("parameters") or [])
