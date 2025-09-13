@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from wexample_pseudocode.config.generator_config import GeneratorConfig
-from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from wexample_pseudocode.config.generator_config import GeneratorConfig
 
