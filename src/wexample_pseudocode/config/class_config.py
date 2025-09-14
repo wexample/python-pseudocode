@@ -20,10 +20,10 @@ def _format_value(value: Any) -> str:
 
 @dataclass
 class ClassConfig:
-    description: str | None = None
-    methods: list[ClassMethodConfig] = field(default_factory=list)
     name: str
+    methods: list[ClassMethodConfig] = field(default_factory=list)
     properties: list[ClassPropertyConfig] = field(default_factory=list)
+    description: str | None = None
 
     @classmethod
     def from_config(

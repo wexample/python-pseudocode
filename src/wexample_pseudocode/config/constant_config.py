@@ -11,9 +11,9 @@ if TYPE_CHECKING:
 
 @dataclass
 class ConstantConfig:
-    description: str | None = None
     name: str
     value: Any
+    description: str | None = None
 
     @classmethod
     def from_config(
