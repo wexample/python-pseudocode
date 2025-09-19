@@ -33,6 +33,7 @@ class ClassConfig:
     ) -> ClassConfig:
         from wexample_pseudocode.config.class_method_config import ClassMethodConfig
         from wexample_pseudocode.config.class_property_config import ClassPropertyConfig
+
         props = [
             ClassPropertyConfig(
                 name=p.get("name"),

@@ -36,6 +36,7 @@ class FunctionConfig:
         from wexample_pseudocode.config.function_parameter_config import (
             FunctionParameterConfig,
         )
+
         params = [
             FunctionParameterConfig.from_config(p)
             for p in (data.get("parameters") or [])

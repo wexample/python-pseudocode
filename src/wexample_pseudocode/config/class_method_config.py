@@ -20,6 +20,7 @@ class ClassMethodConfig:
         from wexample_pseudocode.config.method_parameter_config import (
             MethodParameterConfig,
         )
+
         params = []
         for p in data.get("parameters") or []:
             params.append(
