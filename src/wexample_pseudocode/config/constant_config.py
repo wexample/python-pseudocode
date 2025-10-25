@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 class ConstantConfig:
     name: str
     value: Any
-    
+
     description: str | None = None
 
     @classmethod

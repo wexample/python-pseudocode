@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 @dataclass
 class ClassMethodConfig:
     name: str
-    
+
     description: str | None = None
     parameters: list[MethodParameterConfig] = field(default_factory=list)
     return_description: str | None = None

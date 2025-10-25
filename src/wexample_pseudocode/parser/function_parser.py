@@ -68,7 +68,7 @@ def _first_line(doc: str | None) -> str | None:
 @dataclass
 class FunctionParameter:
     name: str
-    
+
     default: ast.AST | None = None
     description: str | None = None
     has_default: bool = False
@@ -78,7 +78,7 @@ class FunctionParameter:
 @dataclass
 class FunctionItem:
     name: str
-    
+
     description: str | None = None
     parameters: list[FunctionParameter] = None
     return_description: str | None = None

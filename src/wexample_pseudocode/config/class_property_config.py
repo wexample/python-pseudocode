@@ -14,7 +14,7 @@ def _format_value(value: Any) -> str:
 @dataclass
 class ClassPropertyConfig:
     name: str
-    
+
     default: Any = None
     description: str | None = None
     type: str | None = None
