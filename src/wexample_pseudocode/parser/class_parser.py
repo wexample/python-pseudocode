@@ -110,6 +110,7 @@ def _literal_eval_safe(node: ast.AST | None):
 @dataclass
 class ClassProperty:
     name: str
+    
     default: Any = None
     description: str | None = None
     type: str | None = None
@@ -118,6 +119,7 @@ class ClassProperty:
 @dataclass
 class MethodParameter:
     name: str
+    
     description: str | None = None
     type: str | None = None
 
@@ -125,6 +127,7 @@ class MethodParameter:
 @dataclass
 class ClassMethod:
     name: str
+    
     description: str | None = None
     parameters: list[MethodParameter] = field(default_factory=list)
     return_description: str | None = None
@@ -134,6 +137,7 @@ class ClassMethod:
 @dataclass
 class ClassItem:
     name: str
+    
     description: str | None = None
     methods: list[ClassMethod] = field(default_factory=list)
     properties: list[ClassProperty] = field(default_factory=list)

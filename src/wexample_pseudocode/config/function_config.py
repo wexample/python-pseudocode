@@ -22,6 +22,7 @@ def _format_value(value: Any) -> str:
 @dataclass
 class FunctionConfig:
     name: str
+    
     description: str | None = None
     parameters: list[FunctionParameterConfig] = field(default_factory=list)
     return_description: str | None = None

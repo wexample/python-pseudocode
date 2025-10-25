@@ -21,6 +21,7 @@ def _format_value(value: Any) -> str:
 @dataclass
 class ClassConfig:
     name: str
+    
     description: str | None = None
     methods: list[ClassMethodConfig] = field(default_factory=list)
     properties: list[ClassPropertyConfig] = field(default_factory=list)

@@ -6,6 +6,7 @@ from dataclasses import dataclass
 @dataclass
 class MethodParameterConfig:
     name: str
+    
     description: str | None = None
     type: str | None = None
 
