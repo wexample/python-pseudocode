@@ -10,6 +10,7 @@ if TYPE_CHECKING:
 
 def parse_module_functions(source_code: str) -> Iterable[FunctionItem]:
     from class_parser import _annotation_to_str
+
     from wexample_pseudocode.common.docstring import parse_docstring
 
     tree = ast.parse(source_code)
