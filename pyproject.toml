@@ -36,6 +36,7 @@ dev = [
 [tool.setuptools.packages.find]
 include = ["*"]
 exclude = ["wexample_pseudocode.testing*"]
+
 [tool.pdm]
 distribution = true
 
@@ -45,3 +46,14 @@ package-dir = "src"
 [[tool.pdm.build.packages]]
 include = "wexample_pseudocode"
 from = "src"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.coverage.run]
+source = ["wexample_pseudocode"]
+omit = ["*/tests/*", "*/.venv/*", "*/venv/*"]
+
+[tool.coverage.report]
+exclude_lines = ["pragma: no cover", "def __repr__", "raise AssertionError", "raise NotImplementedError", "if __name__ == .__main__.:", "if TYPE_CHECKING:", "@abstractmethod"]
