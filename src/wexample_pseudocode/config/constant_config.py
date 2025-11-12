@@ -1,15 +1,19 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from wexample_pseudocode.config.generator_config import GeneratorConfig
+
+if TYPE_CHECKING:
+    from wexample_pseudocode.config.generator_config import GeneratorConfig
 
 
 @dataclass
 class ConstantConfig:
     name: str
     value: Any
+
     description: str | None = None
 
     @classmethod

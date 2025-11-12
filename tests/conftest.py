@@ -1,17 +1,25 @@
 from __future__ import annotations
 
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
-from wexample_pseudocode.generator.pseudocode_generator import PseudocodeGenerator
 
+if TYPE_CHECKING:
+    from pathlib import Path
 
-@pytest.fixture()
-def resources_dir() -> Path:
-    # Mirror PHP test resources structure under python package tests
-    return Path(__file__).parent / "resources" / "item" / "constant"
+    from wexample_pseudocode.generator.pseudocode_generator import PseudocodeGenerator
 
 
 @pytest.fixture()
 def generator() -> PseudocodeGenerator:
+    from wexample_pseudocode.generator.pseudocode_generator import PseudocodeGenerator
+
     return PseudocodeGenerator()
+
+
+@pytest.fixture()
+def resources_dir() -> Path:
+    from pathlib import Path
+
+    # Mirror PHP test resources structure under python package tests
+    return Path(__file__).parent / "resources" / "item" / "constant"

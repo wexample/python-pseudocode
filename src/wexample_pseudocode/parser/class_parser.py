@@ -1,69 +1,16 @@
 from __future__ import annotations
 
 import ast
-from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from wexample_pseudocode.common.docstring import parse_docstring
-
-
-def _annotation_to_str(ann: ast.AST | None) -> str | None:
-    if ann is None:
-        return None
-    try:
-        return ast.unparse(ann)  # type: ignore[attr-defined]
-    except Exception:
-        if isinstance(ann, ast.Name):
-            return ann.id
-        return None
-
-
-def _literal_eval_safe(node: ast.AST | None):
-    if node is None:
-        return None
-    try:
-        return ast.literal_eval(node)
-    except Exception:
-        try:
-            return ast.unparse(node)  # type: ignore[attr-defined]
-        except Exception:
-            return None
-
-
-@dataclass
-class ClassProperty:
-    name: str
-    type: str | None = None
-    description: str | None = None
-    default: Any = None
-
-
-@dataclass
-class MethodParameter:
-    name: str
-    type: str | None = None
-    description: str | None = None
-
-
-@dataclass
-class ClassMethod:
-    name: str
-    description: str | None = None
-    parameters: list[MethodParameter] = field(default_factory=list)
-    return_type: str | None = None
-    return_description: str | None = None
-
-
-@dataclass
-class ClassItem:
-    name: str
-    description: str | None = None
-    properties: list[ClassProperty] = field(default_factory=list)
-    methods: list[ClassMethod] = field(default_factory=list)
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 
 def parse_module_classes(source_code: str) -> Iterable[ClassItem]:
+    from wexample_pseudocode.common.docstring import parse_docstring
+
     tree = ast.parse(source_code)
     # map line -> end-of-line comment
     line_map: dict[int, str] = {}
@@ -131,7 +78,66 @@ def parse_module_classes(source_code: str) -> Iterable[ClassItem]:
             yield cls
 
 
+def _annotation_to_str(ann: ast.AST | None) -> str | None:
+    if ann is None:
+        return None
+    try:
+        return ast.unparse(ann)  # type: ignore[attr-defined]
+    except Exception:
+        if isinstance(ann, ast.Name):
+            return ann.id
+        return None
+
+
 def _first_line(doc: str | None) -> str | None:
     if not doc:
         return None
     return doc.strip().splitlines()[0].strip()
+
+
+def _literal_eval_safe(node: ast.AST | None):
+    if node is None:
+        return None
+    try:
+        return ast.literal_eval(node)
+    except Exception:
+        try:
+            return ast.unparse(node)  # type: ignore[attr-defined]
+        except Exception:
+            return None
+
+
+@dataclass
+class ClassProperty:
+    name: str
+
+    default: Any = None
+    description: str | None = None
+    type: str | None = None
+
+
+@dataclass
+class MethodParameter:
+    name: str
+
+    description: str | None = None
+    type: str | None = None
+
+
+@dataclass
+class ClassMethod:
+    name: str
+
+    description: str | None = None
+    parameters: list[MethodParameter] = field(default_factory=list)
+    return_description: str | None = None
+    return_type: str | None = None
+
+
+@dataclass
+class ClassItem:
+    name: str
+
+    description: str | None = None
+    methods: list[ClassMethod] = field(default_factory=list)
+    properties: list[ClassProperty] = field(default_factory=list)

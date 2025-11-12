@@ -1,15 +1,11 @@
 from __future__ import annotations
 
 import ast
-from collections.abc import Iterable
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
-
-@dataclass
-class ConstantItem:
-    name: str
-    value: object
-    description: str | None = None
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 
 def parse_module_constants(source_code: str) -> Iterable[ConstantItem]:
@@ -58,3 +54,11 @@ def _literal_eval_safe(node: ast.AST):
             return ast.unparse(node)  # type: ignore[attr-defined]
         except Exception:
             return None
+
+
+@dataclass
+class ConstantItem:
+    name: str
+    value: object
+
+    description: str | None = None

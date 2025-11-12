@@ -3,8 +3,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from wexample_pseudocode.common.type_normalizer import to_python_type
-
 
 def _format_value(value: Any) -> str:
     if isinstance(value, str):
@@ -16,10 +14,11 @@ def _format_value(value: Any) -> str:
 @dataclass
 class FunctionParameterConfig:
     name: str
-    type: str | None = None
-    description: str | None = None
+
     default: Any = None
+    description: str | None = None
     has_default: bool = False
+    type: str | None = None
 
     @classmethod
     def from_config(cls, data: dict[str, Any]) -> FunctionParameterConfig:
@@ -32,6 +31,8 @@ class FunctionParameterConfig:
         )
 
     def to_code(self) -> str:
+        from wexample_pseudocode.common.type_normalizer import to_python_type
+
         py_type = to_python_type(self.type)
         annotated = self.name
         if py_type is not None:

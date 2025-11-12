@@ -1,11 +1,15 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from wexample_pseudocode.common.type_normalizer import to_python_type
-from wexample_pseudocode.config.function_parameter_config import FunctionParameterConfig
 from wexample_pseudocode.config.generator_config import GeneratorConfig
+
+if TYPE_CHECKING:
+    from wexample_pseudocode.config.function_parameter_config import (
+        FunctionParameterConfig,
+    )
+    from wexample_pseudocode.config.generator_config import GeneratorConfig
 
 
 def _format_value(value: Any) -> str:
@@ -18,10 +22,11 @@ def _format_value(value: Any) -> str:
 @dataclass
 class FunctionConfig:
     name: str
+
     description: str | None = None
     parameters: list[FunctionParameterConfig] = field(default_factory=list)
-    return_type: str | None = None
     return_description: str | None = None
+    return_type: str | None = None
 
     @classmethod
     def from_config(
@@ -29,6 +34,10 @@ class FunctionConfig:
         data: dict[str, Any],
         global_config: GeneratorConfig | None = None,
     ) -> FunctionConfig:
+        from wexample_pseudocode.config.function_parameter_config import (
+            FunctionParameterConfig,
+        )
+
         params = [
             FunctionParameterConfig.from_config(p)
             for p in (data.get("parameters") or [])
@@ -52,6 +61,8 @@ class FunctionConfig:
         )
 
     def to_code(self) -> str:
+        from wexample_pseudocode.common.type_normalizer import to_python_type
+
         params_src = ", ".join(p.to_code() for p in self.parameters)
         py_ret = to_python_type(self.return_type)
         ret = f" -> {py_ret}" if py_ret else ""

@@ -3,11 +3,23 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from wexample_pseudocode.common.type_normalizer import normalize_type
 from wexample_pseudocode.generator.abstract_generator import AbstractGenerator
-from wexample_pseudocode.parser.class_parser import parse_module_classes
-from wexample_pseudocode.parser.function_parser import parse_module_functions
-from wexample_pseudocode.parser.module_parser import parse_module_constants
+
+
+def _literal_eval_safe(node):
+    try:
+        import ast as _ast
+
+        if node is None:
+            return None
+        return _ast.literal_eval(node)
+    except Exception:
+        try:
+            import ast as _ast
+
+            return _ast.unparse(node)  # type: ignore[attr-defined]
+        except Exception:
+            return None
 
 
 @dataclass
@@ -20,6 +32,11 @@ class PseudocodeGenerator(AbstractGenerator):
     """
 
     def generate_config_data(self, source_code: str) -> dict[str, Any]:
+        from wexample_pseudocode.common.type_normalizer import normalize_type
+        from wexample_pseudocode.parser.class_parser import parse_module_classes
+        from wexample_pseudocode.parser.function_parser import parse_module_functions
+        from wexample_pseudocode.parser.module_parser import parse_module_constants
+
         items: list[dict[str, Any]] = []
 
         for const in parse_module_constants(source_code):
@@ -122,19 +139,3 @@ class PseudocodeGenerator(AbstractGenerator):
             items.append(item)
 
         return {"items": items}
-
-
-def _literal_eval_safe(node):
-    try:
-        import ast as _ast
-
-        if node is None:
-            return None
-        return _ast.literal_eval(node)
-    except Exception:
-        try:
-            import ast as _ast
-
-            return _ast.unparse(node)  # type: ignore[attr-defined]
-        except Exception:
-            return None

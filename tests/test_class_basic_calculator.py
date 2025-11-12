@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from pathlib import Path
-
 import yaml
-from wexample_pseudocode.generator.pseudocode_generator import PseudocodeGenerator
 
 
 def test_class_basic_calculator() -> None:
+    from pathlib import Path
+
+    from wexample_pseudocode.generator.pseudocode_generator import PseudocodeGenerator
+
     resources_dir = Path(__file__).parent / "resources" / "item" / "class"
     source_path = resources_dir / "basic_calculator.py"
     expected_yaml_path = resources_dir / "basic_calculator.yml"

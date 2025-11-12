@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from wexample_pseudocode.config.class_method_config import ClassMethodConfig
-from wexample_pseudocode.config.class_property_config import ClassPropertyConfig
 from wexample_pseudocode.config.generator_config import GeneratorConfig
+
+if TYPE_CHECKING:
+    from wexample_pseudocode.config.class_method_config import ClassMethodConfig
+    from wexample_pseudocode.config.class_property_config import ClassPropertyConfig
+    from wexample_pseudocode.config.generator_config import GeneratorConfig
 
 
 def _format_value(value: Any) -> str:
@@ -18,9 +21,10 @@ def _format_value(value: Any) -> str:
 @dataclass
 class ClassConfig:
     name: str
+
     description: str | None = None
-    properties: list[ClassPropertyConfig] = field(default_factory=list)
     methods: list[ClassMethodConfig] = field(default_factory=list)
+    properties: list[ClassPropertyConfig] = field(default_factory=list)
 
     @classmethod
     def from_config(
@@ -28,6 +32,9 @@ class ClassConfig:
         data: dict[str, Any],
         global_config: GeneratorConfig | None = None,
     ) -> ClassConfig:
+        from wexample_pseudocode.config.class_method_config import ClassMethodConfig
+        from wexample_pseudocode.config.class_property_config import ClassPropertyConfig
+
         props = [
             ClassPropertyConfig(
                 name=p.get("name"),

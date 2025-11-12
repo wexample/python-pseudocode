@@ -1,33 +1,18 @@
 from __future__ import annotations
 
 import ast
-from collections.abc import Iterable
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
-from wexample_pseudocode.common.docstring import parse_docstring
-
-from .class_parser import _annotation_to_str  # reuse helper
-
-
-@dataclass
-class FunctionParameter:
-    name: str
-    type: str | None = None
-    description: str | None = None
-    default: ast.AST | None = None
-    has_default: bool = False
-
-
-@dataclass
-class FunctionItem:
-    name: str
-    description: str | None = None
-    parameters: list[FunctionParameter] = None
-    return_type: str | None = None
-    return_description: str | None = None
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 
 def parse_module_functions(source_code: str) -> Iterable[FunctionItem]:
+    from class_parser import _annotation_to_str
+
+    from wexample_pseudocode.common.docstring import parse_docstring
+
     tree = ast.parse(source_code)
 
     def _literal(node: ast.AST | None):
@@ -78,3 +63,23 @@ def _first_line(doc: str | None) -> str | None:
     if not doc:
         return None
     return doc.strip().splitlines()[0].strip()
+
+
+@dataclass
+class FunctionParameter:
+    name: str
+
+    default: ast.AST | None = None
+    description: str | None = None
+    has_default: bool = False
+    type: str | None = None
+
+
+@dataclass
+class FunctionItem:
+    name: str
+
+    description: str | None = None
+    parameters: list[FunctionParameter] = None
+    return_description: str | None = None
+    return_type: str | None = None

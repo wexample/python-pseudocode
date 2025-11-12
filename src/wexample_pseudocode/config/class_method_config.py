@@ -1,22 +1,27 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from wexample_pseudocode.common.type_normalizer import to_python_type
-from wexample_pseudocode.config.method_parameter_config import MethodParameterConfig
+if TYPE_CHECKING:
+    from wexample_pseudocode.config.method_parameter_config import MethodParameterConfig
 
 
 @dataclass
 class ClassMethodConfig:
     name: str
+
     description: str | None = None
     parameters: list[MethodParameterConfig] = field(default_factory=list)
-    return_type: str | None = None
     return_description: str | None = None
+    return_type: str | None = None
 
     @classmethod
     def from_config(cls, data: dict[str, Any]) -> ClassMethodConfig:
+        from wexample_pseudocode.config.method_parameter_config import (
+            MethodParameterConfig,
+        )
+
         params = []
         for p in data.get("parameters") or []:
             params.append(
@@ -35,6 +40,8 @@ class ClassMethodConfig:
         )
 
     def to_code(self, indent: str = "    ") -> str:
+        from wexample_pseudocode.common.type_normalizer import to_python_type
+
         params_src = ", ".join(["self"] + [p.to_code() for p in self.parameters])
         py_ret = to_python_type(self.return_type)
         ret = f" -> {py_ret}" if py_ret else ""
