@@ -1,6 +1,6 @@
 # wexample-pseudocode
 
-Version: 0.0.64
+Version: 0.0.65
 
 Code creation and maintenance tools
 
