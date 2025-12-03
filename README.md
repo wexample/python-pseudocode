@@ -1,6 +1,6 @@
 # wexample-pseudocode
 
-Version: 0.0.68
+Version: 0.0.69
 
 Code creation and maintenance tools
 
@@ -208,7 +208,7 @@ Refer to each package's documentation for specific version compatibility require
 
 - attrs: >=23.1.0
 - cattrs: >=23.1.0
-- wexample-helpers: ==0.0.87
+- wexample-helpers: ==0.0.88
 
 
 # About us
