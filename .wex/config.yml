@@ -6,6 +6,6 @@ git:
 global:
   name: pseudocode
   type: app
-  version: 9.0.0
+  version: 9.0.1
 wex:
   version: 6.0.28
