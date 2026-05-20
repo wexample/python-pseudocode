@@ -4,7 +4,6 @@ from dataclasses import dataclass, field
 from typing import Any
 
 import yaml
-
 from wexample_helpers.service.registry import Registry
 
 from wexample_pseudocode.generator.abstract_generator import AbstractGenerator
