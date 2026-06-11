@@ -8,7 +8,7 @@ def test_code_generator_class_basic_calculator() -> None:
 
     resources_dir = Path(__file__).parent / "resources" / "item" / "class"
     yml_path = resources_dir / "basic_calculator.yml"
-    expected_code_path = resources_dir / "basic_calculator.py"
+    expected_code_path = resources_dir / "basic_calculator.py.txt"
 
     gen = CodeGenerator()
     output = gen.generate(yml_path.read_text(encoding="utf-8"))
