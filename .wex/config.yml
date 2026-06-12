@@ -6,16 +6,7 @@ git:
 global:
   name: pseudocode
   type: app
-  version: 9.1.2
-test:
-  coverage:
-    last_report:
-      commit_hash: 7cf466ce3c13876af4bcd8b254fec78dce249c92
-      covered: 551
-      excluded: 22
-      missing: 114
-      percent: 82.85714285714286
-      total: 665
+  version: 9.1.3
 wex:
   migration: 1
   version: 6.0.112
