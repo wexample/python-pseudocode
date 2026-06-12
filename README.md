@@ -1,6 +1,6 @@
 # pseudocode
 
-Version: 9.1.1
+Version: 9.1.2
 
 Code creation and maintenance tools
 
