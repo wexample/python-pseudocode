@@ -45,11 +45,7 @@ class FunctionConfig:
         ret_val = data.get("return")
         ret_type = None
         if ret_val is not None:
-            ret_type = (
-                ret_val.get("type")
-                if isinstance(ret_val, dict)
-                else ret_val
-            )
+            ret_type = ret_val.get("type") if isinstance(ret_val, dict) else ret_val
         ret_desc = None
         if isinstance(ret_val, dict):
             ret_desc = ret_val.get("description")
