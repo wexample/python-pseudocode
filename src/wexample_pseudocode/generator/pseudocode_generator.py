@@ -117,7 +117,7 @@ class PseudocodeGenerator(AbstractGenerator):
                         default_val = _literal_eval_safe(p.default)
                         # explicit None default (null)
                         if (
-                            isinstance(getattr(p, "default", None), type(None))
+                            getattr(p, "default", None) is None
                             or default_val is None
                         ):
                             pd["optional"] = True

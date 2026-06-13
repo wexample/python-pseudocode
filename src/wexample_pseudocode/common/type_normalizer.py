@@ -20,7 +20,7 @@ def normalize_type(type_str: str | None) -> str | None:
     if t in {"list", "List", "Sequence", "MutableSequence", "dict", "Dict", "Mapping"}:
         return "array"
 
-    if t in {"Callable"}:
+    if t == "Callable":
         return "callable"
 
     # Primitives stay as-is
@@ -38,8 +38,8 @@ def to_python_type(type_str: str | None) -> str | None:
         return "list"
     if t == "callable":
         return "typing.Callable"
-    if t in {"mixed"}:
+    if t == "mixed":
         return "typing.Any"
-    if t in {"void"}:
+    if t == "void":
         return None
     return t

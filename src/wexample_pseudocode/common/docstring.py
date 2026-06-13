@@ -40,7 +40,10 @@ def parse_docstring(doc: str | None) -> dict[str, dict[str, str]]:
         except StopIteration:
             return
         i = idx + 1
-        while i < len(lines):
+        n = len(lines)
+        is_params = header.startswith("args") or header.startswith("parameters")
+        is_returns = header.startswith("returns")
+        while i < n:
             s = lines[i].strip()
             if not s:
                 i += 1
@@ -52,10 +55,10 @@ def parse_docstring(doc: str | None) -> dict[str, dict[str, str]]:
                 name, desc = s.split(":", 1)
                 name = name.strip()
                 desc = desc.strip()
-                if header.startswith("args") or header.startswith("parameters"):
+                if is_params:
                     if name:
                         result["params"][name] = desc
-                elif header.startswith("returns"):
+                elif is_returns:
                     if desc and "description" not in result["return"]:
                         result["return"]["description"] = (
                             f"{name}: {desc}" if name else desc

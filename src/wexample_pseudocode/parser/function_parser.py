@@ -36,13 +36,13 @@ def parse_module_functions(source_code: str) -> Iterable[FunctionItem]:
                 return_type=_annotation_to_str(node.returns),
                 return_description=parsed.get("return", {}).get("description"),
             )
-            total_args = [a for a in node.args.args]
+            total_args = node.args.args
             num_defaults = len(node.args.defaults)
             split_index = len(total_args) - num_defaults
             for i, arg in enumerate(total_args):
                 if arg.arg == "self":
                     continue
-                has_default = i >= split_index and num_defaults > 0
+                has_default = i >= split_index
                 default = None
                 if has_default:
                     default = node.args.defaults[i - split_index]

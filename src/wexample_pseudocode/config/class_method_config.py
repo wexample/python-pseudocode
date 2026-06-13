@@ -22,21 +22,21 @@ class ClassMethodConfig:
             MethodParameterConfig,
         )
 
-        params = []
-        for p in data.get("parameters") or []:
-            params.append(
-                MethodParameterConfig(
-                    name=p.get("name"),
-                    type=p.get("type"),
-                    description=p.get("description"),
-                )
+        params = [
+            MethodParameterConfig(
+                name=p.get("name"),
+                type=p.get("type"),
+                description=p.get("description"),
             )
+            for p in data.get("parameters") or []
+        ]
+        return_data = data.get("return") or {}
         return cls(
             name=data.get("name"),
             description=data.get("description"),
             parameters=params,
-            return_type=(data.get("return") or {}).get("type"),
-            return_description=(data.get("return") or {}).get("description"),
+            return_type=return_data.get("type"),
+            return_description=return_data.get("description"),
         )
 
     def to_code(self, indent: str = "    ") -> str:

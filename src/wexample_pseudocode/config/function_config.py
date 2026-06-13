@@ -42,16 +42,17 @@ class FunctionConfig:
             FunctionParameterConfig.from_config(p)
             for p in (data.get("parameters") or [])
         ]
+        ret_val = data.get("return")
         ret_type = None
-        if "return" in data:
+        if ret_val is not None:
             ret_type = (
-                (data["return"] or {}).get("type")
-                if isinstance(data["return"], dict)
-                else data["return"]
+                ret_val.get("type")
+                if isinstance(ret_val, dict)
+                else ret_val
             )
         ret_desc = None
-        if isinstance(data.get("return"), dict):
-            ret_desc = data["return"].get("description")
+        if isinstance(ret_val, dict):
+            ret_desc = ret_val.get("description")
         return cls(
             name=data.get("name"),
             description=data.get("description"),
@@ -89,7 +90,7 @@ class FunctionConfig:
             inner_block: list[str] = [first]
             if rest:
                 inner_block.append("")
-                inner_block.extend(["    " + line for line in rest])
+                inner_block.extend("    " + line for line in rest)
             doc = '"""' + "\n".join(inner_block) + "\n    " + '"""'
             body_lines.append(doc)
         body_lines.append("pass")

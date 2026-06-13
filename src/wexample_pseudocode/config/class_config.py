@@ -56,15 +56,16 @@ class ClassConfig:
 
     def to_code(self) -> str:
         lines: list[str] = [f"class {self.name}:"]
+        _append = lines.append
         if self.description:
-            lines.append(f'    """{self.description}"""')
-            lines.append("")
+            _append(f'    """{self.description}"""')
+            _append("")
         for p in self.properties:
-            lines.append("    " + p.to_code())
+            _append("    " + p.to_code())
         if self.properties and self.methods:
-            lines.append("")
+            _append("")
         for m in self.methods:
-            lines.append(m.to_code(indent="    "))
+            _append(m.to_code(indent="    "))
         if not self.properties and not self.methods and not self.description:
-            lines.append("    pass")
+            _append("    pass")
         return "\n".join(lines)
