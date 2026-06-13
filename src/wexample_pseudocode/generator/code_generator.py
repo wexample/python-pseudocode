@@ -33,10 +33,7 @@ class CodeGenerator(AbstractGenerator):
 
     def generate(self, input_text: str) -> str:
         configs = self._generate_config(input_text)
-        output = ""
-        for cfg in configs:
-            output += cfg.to_code() + "\n"
-        return output
+        return "".join(cfg.to_code() + "\n" for cfg in configs)
 
     # Implement abstract method (not used directly in CodeGenerator flow)
     def generate_config_data(self, source_code: str) -> dict[str, Any]:
