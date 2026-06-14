@@ -1,0 +1,11 @@
+{
+  "engram_version": 1,
+  "source_key": "src/wexample_pseudocode/config/constant_config.py",
+  "cache_nonce": "1c2800147ebc4367950bb7b61bd21d00",
+  "last_visited_at": "2026-06-14T14:00:02+00:00",
+  "last_rev": "2ca480130894954ed4baa15644f6d603de6db535",
+  "last_decision": "edit",
+  "kinds": [],
+  "notes": "removed redundant runtime import of GeneratorConfig; kept TYPE_CHECKING-only import, safe under `from __future__ import annotations`",
+  "in_progress": null
+}
