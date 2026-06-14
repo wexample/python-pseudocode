@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Any
 
 
-@dataclass
+@dataclass(slots=True)
 class GeneratorConfig:
     """Global generator config (minimal placeholder).
 
