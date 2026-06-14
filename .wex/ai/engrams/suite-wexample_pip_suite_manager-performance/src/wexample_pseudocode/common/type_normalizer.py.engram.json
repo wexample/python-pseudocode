@@ -1,0 +1,11 @@
+{
+  "engram_version": 1,
+  "source_key": "src/wexample_pseudocode/common/type_normalizer.py",
+  "cache_nonce": "1c2800147ebc4367950bb7b61bd21d00",
+  "last_visited_at": "2026-06-14T13:56:11+00:00",
+  "last_rev": "d238a0fb865de83af586d1f3e2b13bde27d93c17",
+  "last_decision": "edit",
+  "kinds": [],
+  "notes": "hoisted inline sets/len() calls to module constants; replaced sequential if-chain in to_python_type with dict lookup",
+  "in_progress": null
+}
