@@ -1,0 +1,11 @@
+{
+  "engram_version": 1,
+  "source_key": "src/wexample_pseudocode/generator/pseudocode_generator.py",
+  "cache_nonce": "1c2800147ebc4367950bb7b61bd21d00",
+  "last_visited_at": "2026-06-14T14:07:51+00:00",
+  "last_rev": "8b511e58f68077ff0756241dff237865760f56eb",
+  "last_decision": "edit",
+  "kinds": [],
+  "notes": "hoisted ast + 4 lazy imports to module level, removed duplicate import in _literal_eval_safe, cached fn return_description lookup",
+  "in_progress": null
+}
