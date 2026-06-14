@@ -1,0 +1,11 @@
+{
+  "engram_version": 1,
+  "source_key": "src/wexample_pseudocode/parser/function_parser.py",
+  "cache_nonce": "1c2800147ebc4367950bb7b61bd21d00",
+  "last_visited_at": "2026-06-14T14:09:50+00:00",
+  "last_rev": "45a9034bc2efe28ce8458d43cb58833ec6376713",
+  "last_decision": "edit",
+  "kinds": [],
+  "notes": "removed dead _literal closure (re-created on every parse call) and replaced splitlines()[0] with partition('\\n') in _first_line",
+  "in_progress": null
+}

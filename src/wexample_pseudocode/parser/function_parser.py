@@ -14,17 +14,6 @@ def parse_module_functions(source_code: str) -> Iterable[FunctionItem]:
 
     tree = ast.parse(source_code)
 
-    def _literal(node: ast.AST | None):
-        if node is None:
-            return None
-        try:
-            return ast.literal_eval(node)
-        except Exception:
-            try:
-                return ast.unparse(node)  # type: ignore[attr-defined]
-            except Exception:
-                return None
-
     for node in tree.body:
         if isinstance(node, ast.FunctionDef):
             raw_doc = ast.get_docstring(node)
@@ -61,7 +50,7 @@ def parse_module_functions(source_code: str) -> Iterable[FunctionItem]:
 def _first_line(doc: str | None) -> str | None:
     if not doc:
         return None
-    return doc.strip().splitlines()[0].strip()
+    return doc.strip().partition('\n')[0].strip()
 
 
 @dataclass
