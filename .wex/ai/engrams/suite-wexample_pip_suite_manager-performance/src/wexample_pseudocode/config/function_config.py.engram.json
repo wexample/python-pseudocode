@@ -1,0 +1,11 @@
+{
+  "engram_version": 1,
+  "source_key": "src/wexample_pseudocode/config/function_config.py",
+  "cache_nonce": "1c2800147ebc4367950bb7b61bd21d00",
+  "last_visited_at": "2026-06-14T14:01:15+00:00",
+  "last_rev": "d7b86a2f81aad1874da0213109692764f364ee39",
+  "last_decision": "edit",
+  "kinds": [],
+  "notes": "removed dead _format_value function and redundant GeneratorConfig TYPE_CHECKING re-import",
+  "in_progress": null
+}

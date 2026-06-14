@@ -9,14 +9,6 @@ if TYPE_CHECKING:
     from wexample_pseudocode.config.function_parameter_config import (
         FunctionParameterConfig,
     )
-    from wexample_pseudocode.config.generator_config import GeneratorConfig
-
-
-def _format_value(value: Any) -> str:
-    if isinstance(value, str):
-        escaped = value.replace('"', '\\"')
-        return f'"{escaped}"'
-    return repr(value)
 
 
 @dataclass
