@@ -58,12 +58,16 @@ def parse_module_classes(source_code: str) -> Iterable[ClassItem]:
                         continue
                     raw_doc = ast.get_docstring(stmt)
                     parsed = parse_docstring(raw_doc)
+                    # hoist dict lookups out of per-arg / per-method loops
+                    return_info = parsed.get("return")
+                    return_desc = return_info.get("description") if return_info else None
                     m = ClassMethod(
                         name=stmt.name,
                         description=_first_line(raw_doc),
                         return_type=_annotation_to_str(stmt.returns),
-                        return_description=parsed.get("return", {}).get("description"),
+                        return_description=return_desc,
                     )
+                    params_dict = parsed.get("params") or {}
                     for arg in stmt.args.args:
                         if arg.arg == "self":
                             continue
@@ -71,7 +75,7 @@ def parse_module_classes(source_code: str) -> Iterable[ClassItem]:
                             MethodParameter(
                                 name=arg.arg,
                                 type=_annotation_to_str(arg.annotation),
-                                description=parsed.get("params", {}).get(arg.arg),
+                                description=params_dict.get(arg.arg),
                             )
                         )
                     cls.methods.append(m)
@@ -92,7 +96,9 @@ def _annotation_to_str(ann: ast.AST | None) -> str | None:
 def _first_line(doc: str | None) -> str | None:
     if not doc:
         return None
-    return doc.strip().splitlines()[0].strip()
+    # partition stops at the first '\n' without building a full list
+    first, _, _ = doc.lstrip().partition('\n')
+    return first.rstrip()
 
 
 def _literal_eval_safe(node: ast.AST | None):

@@ -1,0 +1,11 @@
+{
+  "engram_version": 1,
+  "source_key": "src/wexample_pseudocode/parser/class_parser.py",
+  "cache_nonce": "1c2800147ebc4367950bb7b61bd21d00",
+  "last_visited_at": "2026-06-14T14:09:11+00:00",
+  "last_rev": "7fc0836d3b73bf193ea0a4fb6f27c2f2e0943d38",
+  "last_decision": "edit",
+  "kinds": [],
+  "notes": "hoisted params_dict/return_info out of per-arg loop and replaced splitlines()[0] with partition in _first_line",
+  "in_progress": null
+}
