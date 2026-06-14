@@ -1,0 +1,11 @@
+{
+  "engram_version": 1,
+  "source_key": "src/wexample_pseudocode/generator/abstract_generator.py",
+  "cache_nonce": "1c2800147ebc4367950bb7b61bd21d00",
+  "last_visited_at": "2026-06-14T14:05:22+00:00",
+  "last_rev": "3dfccc5699c03353ad5bcbeca34fabb34a96647b",
+  "last_decision": "edit",
+  "kinds": [],
+  "notes": "hoisted fixed yaml.safe_dump kwargs into module-level functools.partial to avoid per-call dict allocation in dump_pseudocode",
+  "in_progress": null
+}
