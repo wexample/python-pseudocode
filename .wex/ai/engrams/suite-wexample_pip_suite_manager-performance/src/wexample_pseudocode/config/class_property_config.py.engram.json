@@ -1,0 +1,11 @@
+{
+  "engram_version": 1,
+  "source_key": "src/wexample_pseudocode/config/class_property_config.py",
+  "cache_nonce": "1c2800147ebc4367950bb7b61bd21d00",
+  "last_visited_at": "2026-06-14T13:59:07+00:00",
+  "last_rev": "74666089284ae4f6d16b5428ce9c0dd002264012",
+  "last_decision": "edit",
+  "kinds": [],
+  "notes": "fast-path in _format_value skips replace() and escaped-string allocation when value has no double quotes",
+  "in_progress": null
+}

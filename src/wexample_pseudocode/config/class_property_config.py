@@ -6,6 +6,8 @@ from typing import Any
 
 def _format_value(value: Any) -> str:
     if isinstance(value, str):
+        if '"' not in value:
+            return f'"{value}"'
         escaped = value.replace('"', '\\"')
         return f'"{escaped}"'
     return repr(value)
