@@ -1,0 +1,11 @@
+{
+  "engram_version": 1,
+  "source_key": "src/wexample_pseudocode/config/class_method_config.py",
+  "cache_nonce": "1c2800147ebc4367950bb7b61bd21d00",
+  "last_visited_at": "2026-06-14T13:58:12+00:00",
+  "last_rev": "8472781939377ab673d21d79eae34708624c8a79",
+  "last_decision": "edit",
+  "kinds": [],
+  "notes": "replaced list-concat params_src with itertools.chain generator; collapsed inner_block init+append into single-element literal",
+  "in_progress": null
+}

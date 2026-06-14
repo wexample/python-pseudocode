@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from itertools import chain
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
@@ -42,7 +43,7 @@ class ClassMethodConfig:
     def to_code(self, indent: str = "    ") -> str:
         from wexample_pseudocode.common.type_normalizer import to_python_type
 
-        params_src = ", ".join(["self"] + [p.to_code() for p in self.parameters])
+        params_src = ", ".join(chain(("self",), (p.to_code() for p in self.parameters)))
         py_ret = to_python_type(self.return_type)
         ret = f" -> {py_ret}" if py_ret else ""
         header = f"def {self.name}({params_src}){ret}:"
@@ -67,8 +68,7 @@ class ClassMethodConfig:
         if doc_lines:
             first = doc_lines[0]
             rest = doc_lines[1:]
-            inner_block: list[str] = []
-            inner_block.append(first)
+            inner_block: list[str] = [first]
             if rest:
                 inner_block.append("")  # blank line before param/return block
                 # indent param/return lines inside the docstring
