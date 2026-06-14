@@ -1,0 +1,11 @@
+{
+  "engram_version": 1,
+  "source_key": "src/wexample_pseudocode/config/function_parameter_config.py",
+  "cache_nonce": "1c2800147ebc4367950bb7b61bd21d00",
+  "last_visited_at": "2026-06-14T14:02:55+00:00",
+  "last_rev": "0e1b631ccad082e36d863d36b5803e2abff8951d",
+  "last_decision": "edit",
+  "kinds": [],
+  "notes": "hoisted to_python_type import to module level; cached self.name/has_default as locals; dropped redundant left=annotated indirection",
+  "in_progress": null
+}
