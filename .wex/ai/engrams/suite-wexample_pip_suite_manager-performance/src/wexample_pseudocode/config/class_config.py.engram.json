@@ -1,0 +1,11 @@
+{
+  "engram_version": 1,
+  "source_key": "src/wexample_pseudocode/config/class_config.py",
+  "cache_nonce": "1c2800147ebc4367950bb7b61bd21d00",
+  "last_visited_at": "2026-06-14T13:57:09+00:00",
+  "last_rev": "598c0dbbbb3b967b0f0d9eac5fc29dfe55b7003f",
+  "last_decision": "edit",
+  "kinds": [],
+  "notes": "removed dead _format_value, dropped runtime GeneratorConfig import and moved Any under TYPE_CHECKING",
+  "in_progress": null
+}

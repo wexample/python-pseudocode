@@ -1,21 +1,13 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any
-
-from wexample_pseudocode.config.generator_config import GeneratorConfig
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
+    from typing import Any
     from wexample_pseudocode.config.class_method_config import ClassMethodConfig
     from wexample_pseudocode.config.class_property_config import ClassPropertyConfig
     from wexample_pseudocode.config.generator_config import GeneratorConfig
-
-
-def _format_value(value: Any) -> str:
-    if isinstance(value, str):
-        escaped = value.replace('"', '\\"')
-        return f'"{escaped}"'
-    return repr(value)
 
 
 @dataclass
