@@ -33,7 +33,7 @@ class CodeGenerator(AbstractGenerator):
 
     def generate(self, input_text: str) -> str:
         configs = self._generate_config(input_text)
-        return "".join(cfg.to_code() + "\n" for cfg in configs)
+        return "\n".join(cfg.to_code() for cfg in configs) + "\n" if configs else ""
 
     # Implement abstract method (not used directly in CodeGenerator flow)
     def generate_config_data(self, source_code: str) -> dict[str, Any]:
@@ -57,16 +57,13 @@ class CodeGenerator(AbstractGenerator):
         from wexample_pseudocode.config.generator_config import GeneratorConfig
 
         data = yaml.safe_load(input_text) or {}
-        instances = []
 
-        global_generator_config = None
-        if "generator" in data:
-            global_generator_config = GeneratorConfig.from_config(
-                data["generator"]
-            )  # kept for parity
+        global_generator_config = (
+            GeneratorConfig.from_config(data["generator"]) if "generator" in data else None
+        )
 
-        for item in data.get("items", []) or []:
-            config_cls = self._find_config_loader(item)
-            if config_cls is not None:
-                instances.append(config_cls.from_config(item, global_generator_config))
-        return instances
+        return [
+            config_cls.from_config(item, global_generator_config)
+            for item in data.get("items", []) or []
+            if (config_cls := self._find_config_loader(item)) is not None
+        ]

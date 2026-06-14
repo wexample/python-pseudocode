@@ -1,0 +1,11 @@
+{
+  "engram_version": 1,
+  "source_key": "src/wexample_pseudocode/generator/code_generator.py",
+  "cache_nonce": "1c2800147ebc4367950bb7b61bd21d00",
+  "last_visited_at": "2026-06-14T14:06:24+00:00",
+  "last_rev": "677d8b6d0c77898861b465ccdfb196206cf17a7f",
+  "last_decision": "edit",
+  "kinds": [],
+  "notes": "replaced per-element +\"\\n\" with \"\\n\".join in generate; collapsed _generate_config loop into walrus-operator list comprehension",
+  "in_progress": null
+}
