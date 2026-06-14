@@ -1,0 +1,11 @@
+{
+  "engram_version": 1,
+  "source_key": "src/wexample_pseudocode/common/docstring.py",
+  "cache_nonce": "1c2800147ebc4367950bb7b61bd21d00",
+  "last_visited_at": "2026-06-14T13:54:42+00:00",
+  "last_rev": "a4b1abb4f0e0c05accdc79d488457b187bb03950",
+  "last_decision": "edit",
+  "kinds": [],
+  "notes": "combine 4 line-scanning passes into one; drop strip() inside block loop; replace try/except StopIteration with dict.get; collapse is_params/is_returns into single bool",
+  "in_progress": null
+}

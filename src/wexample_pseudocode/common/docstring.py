@@ -19,10 +19,11 @@ def parse_docstring(doc: str | None) -> dict[str, dict[str, str]]:
     if not doc:
         return result
 
-    lines = [l.rstrip() for l in doc.splitlines()]
+    lines = [l.strip() for l in doc.splitlines()]
 
-    # Pass 1: reST style
-    for line in lines:
+    # Single pass: reST directives + block-header index collection
+    header_map: dict[str, int] = {}
+    for idx, line in enumerate(lines):
         m = PARAM_RE.match(line)
         if m:
             result["params"][m.group("name")] = m.group("desc").strip()
@@ -30,21 +31,24 @@ def parse_docstring(doc: str | None) -> dict[str, dict[str, str]]:
         m = RETURN_RE.match(line)
         if m:
             result["return"]["description"] = m.group("desc").strip()
+            continue
+        low = line.lower()
+        if low.startswith("args:"):
+            header_map.setdefault("args:", idx)
+        elif low.startswith("parameters:"):
+            header_map.setdefault("parameters:", idx)
+        elif low.startswith("returns:"):
+            header_map.setdefault("returns:", idx)
 
-    # Pass 2: Google/NumPy minimal blocks
-    def parse_block(header: str) -> None:
-        try:
-            idx = next(
-                i for i, l in enumerate(lines) if l.strip().lower().startswith(header)
-            )
-        except StopIteration:
+    # Google/NumPy minimal blocks
+    def parse_block(header: str, is_params: bool) -> None:
+        start = header_map.get(header)
+        if start is None:
             return
-        i = idx + 1
+        i = start + 1
         n = len(lines)
-        is_params = header.startswith("args") or header.startswith("parameters")
-        is_returns = header.startswith("returns")
         while i < n:
-            s = lines[i].strip()
+            s = lines[i]  # already stripped
             if not s:
                 i += 1
                 continue
@@ -58,15 +62,14 @@ def parse_docstring(doc: str | None) -> dict[str, dict[str, str]]:
                 if is_params:
                     if name:
                         result["params"][name] = desc
-                elif is_returns:
-                    if desc and "description" not in result["return"]:
-                        result["return"]["description"] = (
-                            f"{name}: {desc}" if name else desc
-                        )
+                elif desc and "description" not in result["return"]:
+                    result["return"]["description"] = (
+                        f"{name}: {desc}" if name else desc
+                    )
             i += 1
 
-    parse_block("args:")
-    parse_block("parameters:")
-    parse_block("returns:")
+    parse_block("args:", True)
+    parse_block("parameters:", True)
+    parse_block("returns:", False)
 
     return result
