@@ -21,9 +21,10 @@ def parse_module_constants(source_code: str) -> Iterable[ConstantItem]:
     # Python's ast doesn't keep comments; we do a light heuristic by reading the source.
     line_map = {}
     for i, line in enumerate(source_code.splitlines(), start=1):
-        if "#" in line:
-            # take text after the first #, strip spaces
-            comment = line.split("#", 1)[1].strip()
+        # partition does a single scan; avoids the double-pass of `in` + split
+        _, sep, rest = line.partition("#")
+        if sep:
+            comment = rest.strip()
             if comment:
                 line_map[i] = comment
 
@@ -48,7 +49,7 @@ def parse_module_constants(source_code: str) -> Iterable[ConstantItem]:
 def _literal_eval_safe(node: ast.AST):
     try:
         return ast.literal_eval(node)
-    except Exception:
+    except (ValueError, TypeError):
         # Fallback to a simple repr if non-literal
         try:
             return ast.unparse(node)  # type: ignore[attr-defined]

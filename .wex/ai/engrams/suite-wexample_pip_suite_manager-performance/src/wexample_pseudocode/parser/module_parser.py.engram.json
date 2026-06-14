@@ -1,0 +1,11 @@
+{
+  "engram_version": 1,
+  "source_key": "src/wexample_pseudocode/parser/module_parser.py",
+  "cache_nonce": "1c2800147ebc4367950bb7b61bd21d00",
+  "last_visited_at": "2026-06-14T14:10:51+00:00",
+  "last_rev": "ffb654194fd3154852c74af4ae2439cf0120a149",
+  "last_decision": "edit",
+  "kinds": [],
+  "notes": "use str.partition for single-pass comment scan; narrow literal_eval except to (ValueError, TypeError)",
+  "in_progress": null
+}
