@@ -48,17 +48,20 @@ class ClassConfig:
         )
 
     def to_code(self) -> str:
+        props = self.properties
+        methods = self.methods
+        description = self.description
         lines: list[str] = [f"class {self.name}:"]
         _append = lines.append
-        if self.description:
-            _append(f'    """{self.description}"""')
+        if description:
+            _append(f'    """{description}"""')
             _append("")
-        for p in self.properties:
+        for p in props:
             _append("    " + p.to_code())
-        if self.properties and self.methods:
+        if props and methods:
             _append("")
-        for m in self.methods:
+        for m in methods:
             _append(m.to_code(indent="    "))
-        if not self.properties and not self.methods and not self.description:
+        if not props and not methods and not description:
             _append("    pass")
         return "\n".join(lines)
