@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from typing import Any
+
     from wexample_pseudocode.config.class_method_config import ClassMethodConfig
     from wexample_pseudocode.config.class_property_config import ClassPropertyConfig
     from wexample_pseudocode.config.generator_config import GeneratorConfig
