@@ -1,6 +1,6 @@
 # pseudocode
 
-Version: 9.4.1
+Version: 9.4.2
 
 Code creation and maintenance tools
 
@@ -82,7 +82,7 @@ Visit the [Wexample Suite documentation](https://docs.wexample.com) for the comp
 
 - attrs: >=23.1.0
 - cattrs: >=23.1.0
-- wexample-helpers: >=17.3.0
+- wexample-helpers: >=18.0.0
 
 ## Versioning & Compatibility Policy
 
